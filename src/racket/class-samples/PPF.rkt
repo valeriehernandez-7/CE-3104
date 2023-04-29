@@ -73,13 +73,27 @@
   los elementos de la lista con el elemento pivote
   @param pivote
   @param lista
+  @param menores
+  @param iguales
+  @param mayores
   @return list
 |#
-(define (quicksort-filtrar pivote lista)
+(define (quicksort-filtrar pivote lista menores iguales mayores)
   (cond 
-    ((null? lista) '())
-    ((pivote (car lista)) (cons (car lista) (quicksort-filtrar pivote (cdr lista))))
-    (else (quicksort-filtrar pivote (cdr lista)))
+    ((null? lista)
+      (append (quicksort menores) iguales (quicksort mayores))
+    )
+    (else
+      (cond
+        ((> pivote (car lista))
+          (quicksort-filtrar pivote (cdr lista) (cons (car lista) menores) iguales mayores)
+        )
+        ((< pivote (car lista))
+          (quicksort-filtrar pivote (cdr lista) menores iguales (cons (car lista) mayores))
+        )
+        (else (quicksort-filtrar pivote (cdr lista) menores (cons (car lista) iguales) mayores))
+      )
+    )
   )
 )
 
@@ -92,16 +106,7 @@
 (define (quicksort lista)
   (cond 
     ((null? lista) '())
-    (else (
-        let* (
-          (pivote (car lista))
-          (elementos (cdr lista))
-          (menores (quicksort-filtrar (lambda (elemento) (< elemento pivote)) elementos))
-          (mayores (quicksort-filtrar (lambda (elemento) (>= elemento pivote)) elementos))
-        )
-        (append (quicksort menores) (list pivote) (quicksort mayores))
-      )
-    )
+    (else (quicksort-filtrar (car lista) lista '() '() '()))
   )
 )
 
