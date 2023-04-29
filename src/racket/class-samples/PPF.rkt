@@ -57,14 +57,14 @@
 #|
   Filtra de manera ascendente la lista recibida comparando 
   los elementos de la lista con el elemento pivote
-  @param pivote de número real de la lista utilizado como referencia de comparación
-  @param lista lista de números reales o lista vacía
+  @param pivote número real de la lista utilizado como referencia de comparación
+  @param lista lista de números reales
   @param menores lista de números reales menores al pivote
   @param iguales lista de números reales iguales al pivote
   @param mayores lista de números reales mayores al pivote
-  @return lista de números reales o lista vacía
+  @return lista de números reales
 |#
-(define (quicksort-filtrar pivote lista menores iguales mayores)
+(define (quicksort-filtrar lista (pivote (car lista)) (menores '()) (iguales '()) (mayores '()))
   (cond 
     ((null? lista)
       (append (quicksort menores) iguales (quicksort mayores))
@@ -72,12 +72,12 @@
     (else
       (cond
         ((> pivote (car lista))
-          (quicksort-filtrar pivote (cdr lista) (cons (car lista) menores) iguales mayores)
+          (quicksort-filtrar (cdr lista) pivote (cons (car lista) menores) iguales mayores)
         )
         ((< pivote (car lista))
-          (quicksort-filtrar pivote (cdr lista) menores iguales (cons (car lista) mayores))
+          (quicksort-filtrar (cdr lista) pivote menores iguales (cons (car lista) mayores))
         )
-        (else (quicksort-filtrar pivote (cdr lista) menores (cons (car lista) iguales) mayores))
+        (else (quicksort-filtrar (cdr lista) pivote menores (cons (car lista) iguales) mayores))
       )
     )
   )
@@ -86,13 +86,13 @@
 #|
   Aplica el algoritmo Quicksort de orden ascendente a la lista recibida,
   utilizando el método quicksort-filtrar cómo auxiliar
-  @param lista
-  @return list
+  @param lista lista de números reales o lista vacía
+  @return lista de números reales o lista vacía
 |#
 (define (quicksort lista)
   (cond 
     ((null? lista) '())
-    (else (quicksort-filtrar (car lista) lista '() '() '()))
+    (else (quicksort-filtrar lista))
   )
 )
 
