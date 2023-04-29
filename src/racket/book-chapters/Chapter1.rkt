@@ -1,9 +1,12 @@
 #lang racket
 
 #|
-  https://docs.racket-lang.org/reference/generic-numbers.html#%28part._.Arithmetic%29
-  https://docs.racket-lang.org/reference/generic-numbers.html#%28part._.Number_.Comparison%29
-  
+  Libro : Introducción a la programación con Scheme
+  Autor : Helo Guzmán, José Elías
+  Edición : 2da
+  Referencias:
+    https://docs.racket-lang.org/reference/generic-numbers.html#%28part._.Arithmetic%29
+    https://docs.racket-lang.org/reference/generic-numbers.html#%28part._.Number_.Comparison%29
 |#
 
 (display "\nEjercicio N° 1\n") ; Chapter 1 - Pag 37 (pdf 20)

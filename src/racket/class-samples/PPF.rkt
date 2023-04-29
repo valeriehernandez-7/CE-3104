@@ -71,12 +71,12 @@
 #|
   Filtra de manera ascendente la lista recibida comparando 
   los elementos de la lista con el elemento pivote
-  @param pivote
-  @param lista
-  @param menores
-  @param iguales
-  @param mayores
-  @return list
+  @param pivote de número real de la lista utilizado como referencia de comparación
+  @param lista lista de números reales o lista vacía
+  @param menores lista de números reales menores al pivote
+  @param iguales lista de números reales iguales al pivote
+  @param mayores lista de números reales mayores al pivote
+  @return lista de números reales o lista vacía
 |#
 (define (quicksort-filtrar pivote lista menores iguales mayores)
   (cond 
