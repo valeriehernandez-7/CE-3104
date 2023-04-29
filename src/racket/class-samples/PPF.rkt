@@ -41,20 +41,6 @@
 )
 
 #|
-  Eliminar primera coincidencia del elemento en la lista
-  @param elemento
-  @param lista
-  @return list
-|#
-(define (eliminar-primer elemento lista)
-  (cond
-    ((null? lista) lista)
-    ((equal? elemento (car lista)) (cdr lista))
-    (else (cons (car lista) (eliminar-primer elemento (cdr lista))))
-  )
-)
-
-#|
   Elimina todas las coincidencias del elemento en la lista
   @param elemento
   @param lista
@@ -112,28 +98,34 @@
 
 ; - - - - - Test - - - - -
 
-(display "\nFactorial\n")
+(display "\n(factorial n)\n")
 (factorial 0)
 (factorial 1)
 (factorial 7)
 
-(display "\nFibonacci\n")
+(display "\n(fibonacci n)\n")
 (fibonacci 0)
 (fibonacci 1)
 (fibonacci 7)
 
-(display "\nMiembro\n")
+(display "\n(miembro elemento lista)\n")
 (miembro 'a '(a b c))
 (miembro 'a '(b c d))
 
-(display "\nEliminarPrimer\n")
-(eliminar-primer 'a '(a b c a))
-(eliminar-primer 'a '(b c d))
-
-(display "\nEliminar\n")
+(display "\n(eliminar elemento lista)\n")
 (eliminar 'a '(a b c a))
 (eliminar 'a '(b c d))
 
-(display "\nQuicksort\n")
+(display "\n(quicksort lista)\n")
 (quicksort '(3 2 1))
 (quicksort '(2 3 4 1 1 2 5))
+
+(display "\n(automovil atributos valores)\n")
+
+(display "\n(arbol-binario-eliminar-nodo arbol)\n")
+
+(display "\n(grafo-recorrer-anchura grafo)\n")
+
+(display "\n(longitud-cola lista)\n")
+
+(display "\n(longitud-pila lista)\n")
