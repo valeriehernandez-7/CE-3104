@@ -122,8 +122,44 @@
   (cond
     ((null? valores) (error "Los valores de los atributos del automóvil deben ser especificados"))
     ((null? atributos) (error "Los atributos del automóvil deben ser especificados"))
-    ((equal? (equal? (length valores) (length atributos)) #f) (error "La cantidad de valores y atributos no coinciden"))
+    ((not (equal? (length valores) (length atributos))) (error "La cantidad de valores y atributos no coinciden"))
     (else (automovil-config valores atributos))
+  )
+)
+
+(define (arbol-binario-nodo? nodo arbol)
+  (displayln arbol)
+  (cond
+    ((null? arbol) #f)
+    ((equal? nodo (car arbol)) #t)
+    (else 
+      (cond
+        ((list? (car arbol))
+          (cond
+            ((> (length (car arbol)) 1) (arbol-binario-nodo? nodo (cons (cdar arbol) (cdr arbol))))
+            (else (arbol-binario-nodo? nodo (append (car arbol) (cdr arbol))))
+          )
+        )
+        (else (arbol-binario-nodo? nodo (cdr arbol)))
+      )
+    )
+  )
+)
+
+(define (arbol-binario-eliminar-n nodo arbol)
+  (displayln "\nEliminar nodo")
+)
+
+(define (arbol-binario-eliminar nodo arbol)
+  (cond
+    ((null? nodo) (error "Debe especificar el nodo del árbol binario que desea eliminar"))
+    ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
+    (else
+      (cond
+        ((arbol-binario-nodo? nodo arbol) (arbol-binario-eliminar-n nodo arbol))
+        (else (error "El nodo especificado no es miembro del árbol especificado"))
+      )
+    )
   )
 )
 
@@ -160,7 +196,8 @@
 (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
 (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
-(displayln "\n\n(arbol-binario-eliminar-nodo arbol)\n")
+(displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
+(arbol-binario-eliminar '18 '(10 (5 3 8) (15 14 18)))
 
 (displayln "\n\n(grafo-recorrer-anchura grafo)\n")
 
