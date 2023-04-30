@@ -127,20 +127,20 @@
   )
 )
 
-(define (arbol-binario-nodo? nodo arbol)
+(define (arbol-binario-nodo? nodo arbol elemento)
   (displayln arbol)
   (cond
     ((null? arbol) #f)
-    ((equal? nodo (car arbol)) #t)
+    ((equal? nodo elemento) #t)
     (else 
       (cond
         ((list? (car arbol))
           (cond
-            ((> (length (car arbol)) 1) (arbol-binario-nodo? nodo (cons (cdar arbol) (cdr arbol))))
-            (else (arbol-binario-nodo? nodo (append (car arbol) (cdr arbol))))
+            ((> (length (car arbol)) 1) (arbol-binario-nodo? nodo (cons (cdar arbol) (cdr arbol)) (caar arbol)))
+            (else (arbol-binario-nodo? nodo (append (car arbol) (cdr arbol)) (caar arbol)))
           )
         )
-        (else (arbol-binario-nodo? nodo (cdr arbol)))
+        (else (arbol-binario-nodo? nodo (cdr arbol) (car arbol)))
       )
     )
   )
@@ -156,7 +156,7 @@
     ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
     (else
       (cond
-        ((arbol-binario-nodo? nodo arbol) (arbol-binario-eliminar-n nodo arbol))
+        ((arbol-binario-nodo? nodo arbol (car arbol)) (arbol-binario-eliminar-n nodo arbol))
         (else (error "El nodo especificado no es miembro del árbol especificado"))
       )
     )
@@ -197,7 +197,9 @@
 (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
 (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
-(arbol-binario-eliminar '18 '(10 (5 3 8) (15 14 18)))
+(arbol-binario-eliminar 10 '(10 (5 3 8) (15 14 18)))
+(arbol-binario-eliminar 3 '(10 (5 3 8) (15 14 18)))
+(arbol-binario-eliminar 18 '(10 (5 3 8) (15 14 18)))
 
 (displayln "\n\n(grafo-recorrer-anchura grafo)\n")
 
