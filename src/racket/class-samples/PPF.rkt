@@ -30,7 +30,7 @@
       2.1. > (fibonacci 0)
       2.2. > (fibonacci 1)
       2.3. > (fibonacci 7)
-  3. (miembro elemento lista)
+  3. (miembro? elemento lista)
       3.1. > (miembro null '())
       3.2. > (miembro 'a '(a b c))
       3.3. > (miembro 'a '(b c d))
@@ -47,13 +47,13 @@
       6.2. > (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
       6.3. > (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
   7. (arbol-binario-eliminar nodo arbol)
-      7.1. > (arbol-binario-eliminar 10 '(10 (5 3 8) (15 14 18)))
-      7.2. > (arbol-binario-eliminar 3 '(10 (5 3 8) (15 14 18)))
-      7.3. > (arbol-binario-eliminar 18 '(10 (5 3 8) (15 14 18)))
-  8. (grafo-recorrer-anchura grafo)
-      8.1. > (grafo-recorrer-anchura '((A B C) ((A B) (A C) (B C))))
-      8.2. > (grafo-recorrer-anchura '((A B C D) ((A B) (B A) (B C) (C A))))
-      8.3. > (grafo-recorrer-anchura '((A B C D E F) ((A B) (A C) (A D) (B E) (B F))))
+      7.1. > (arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
+      7.2. > (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
+      7.3. > (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
+  8. (grafo-recorrer-anchura grafo nodo)
+      8.1. > (grafo-recorrer-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
+      8.2. > (grafo-recorrer-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+      8.3. > (grafo-recorrer-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
   9. (longitud-cola lista)
       9.1.1. > (longitud-cola '())
       9.1.2. > (longitud-cola '(a b c))
@@ -97,11 +97,11 @@
   @param lista de datos
   @return booleano (falso : si no es miembro de la lista , true : si es miembro de la lista)
 |#
-(define (miembro elemento lista)
+(define (miembro? elemento lista)
   (cond
     ((null? lista) #f)
     ((equal? elemento (car lista)) #t)
-    (else (miembro elemento (cdr lista)))
+    (else (miembro? elemento (cdr lista)))
   )
 )
 
@@ -231,6 +231,46 @@
 )
 
 #|
+  Verifica que el grofo especificado tenga la forma ((n_1 (a_1 a_n)) (n_n (a_1 a_n)))
+  @param grofo lista multidimensional de datos cómo grafo
+  @return booleano (falso : el grafo tiene fallo de formato , true : el grafo sigue el formato)
+|#
+(define (grafo-valido? grafo)
+  (cond
+    ((null? grafo) #t)
+    ((not (list? (car grafo))) #f)
+    ((not (equal? (length (car grafo)) 2)) #f)
+    ((list? (caar grafo)) #f)
+    ((not (list? (cadar grafo))) #f)
+    ((< (length (cadar grafo)) 1) #f)
+    (else (grafo-valido? (cdr grafo)))
+  )
+)
+
+#|
+  Verifica si el nodo pertenece al grafo
+  @param nodo valor del nodo que desea verificar pertencia
+  @param grafo grafo que desea recorrer
+  @return booleano (falso : el nodo no pertenece al grafo, true : el nodo si pertenece al grafo)
+|#
+(define (grafo-miembro? nodo grafo)
+  (cond
+    ((null? grafo) #f)
+    ((equal? nodo (caar grafo)) #t)
+    (else (grafo-miembro? nodo (cdr grafo)))
+  )
+)
+
+(define (grafo-recorrer-anchura grafo (nodo (caar grafo)))
+  (cond
+    ((or (null? grafo) (not (grafo-valido? grafo))) (error "Grafo no válido"))
+    ((null? nodo) (error "Nodo inicial de recorrido debe ser especificado"))
+    ((not (grafo-miembro? nodo grafo)) (error "Nodo inicial de recorrido no pertenece al grafo"))
+    (else (displayln "Recorrer grafo"))
+  )
+)
+
+#|
   Cálcula la cantidad de elementos de la lista mediante recursión,
   se detiene cuándo la lista recibida esté vacía
   @param lista de datos
@@ -283,10 +323,10 @@
 (fibonacci 1)
 (fibonacci 7)
 
-(displayln "\n\n(miembro elemento lista)\n")
-(miembro null '())
-(miembro 'a '(a b c))
-(miembro 'a '(b c d))
+(displayln "\n\n(miembro? elemento lista)\n")
+(miembro? null '())
+(miembro? 'a '(a b c))
+(miembro? 'a '(b c d))
 
 (displayln "\n\n(eliminar elemento lista)\n")
 (eliminar 'a '(a))
@@ -304,11 +344,27 @@
 (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
 (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
-(arbol-binario-eliminar 10 '(10 (5 3 8) (15 14 18)))
-(arbol-binario-eliminar 3 '(10 (5 3 8) (15 14 18)))
-(arbol-binario-eliminar 18 '(10 (5 3 8) (15 14 18)))
+(arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
+(arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
+(arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
 
-(displayln "\n\n(grafo-recorrer-anchura grafo)\n")
+(displayln "\n\n(grafo-valido? grafo)\n")
+(grafo-valido? '((A (B C)) (B (A C)) (C (A B))))
+(grafo-valido? '(A (B (A C)) (C (A B))))
+(grafo-valido? '((A) (B (A C)) (C (A B))))
+(grafo-valido? '(((A) (B C)) (B (A C)) (C (A B))))
+(grafo-valido? '((A B) (B (A C)) (C (A B))))
+(grafo-valido? '((A ()) (B (A C)) (C (A B))))
+
+(displayln "\n\n(grafo-miembro? nodo grafo)\n")
+(grafo-miembro? 'A '((A (B C)) (B (A C)) (C (A B))))
+(grafo-miembro? 'C '((A (B C)) (B (A C)) (C (A B))))
+(grafo-miembro? 'X '((A (B C)) (B (A C)) (C (A B))))
+
+(displayln "\n\n(grafo-recorrer-anchura grafo nodo)\n")
+(grafo-recorrer-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
+(grafo-recorrer-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+(grafo-recorrer-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
 
 (displayln "\n\n(longitud-cola lista)\n")
 (longitud-cola '())
