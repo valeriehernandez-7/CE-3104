@@ -1,5 +1,70 @@
 #lang racket
 
+
+#|
+  Hernández Fernández Valerie M.
+
+  Programación Funcional
+  Taller
+
+  Instituto Tecnológico de Costa Rica
+  Área Académica Ingeniería en Computadores
+
+  CE 3104 Lenguajes, Compiladores e Intérpretes
+  Ing. Marco Rivera Meneses, MGP
+  Grupo 1
+
+  I Semestre
+  2023
+|#
+
+
+#|
+  Contenidos
+
+  1. (factorial n)
+      1.1. > (factorial 0)
+      1.2. > (factorial 1)
+      1.3. > (factorial 7)
+  2. (fibonacci n)
+      2.1. > (fibonacci 0)
+      2.2. > (fibonacci 1)
+      2.3. > (fibonacci 7)
+  3. (miembro elemento lista)
+      3.1. > (miembro null '())
+      3.2. > (miembro 'a '(a b c))
+      3.3. > (miembro 'a '(b c d))
+  4. (eliminar elemento lista)
+      4.1. > (eliminar 'a '(a))
+      4.2. > (eliminar 'a '(a b c a))
+      4.3. > (eliminar 'a '(b c d))
+  5. (quicksort lista)
+      5.1. > (quicksort '(7 5))
+      5.2. > (quicksort '(3 2 1))
+      5.3. > (quicksort '(2 3 4 1 1 2 5))
+  6. (automovil valores atributos)
+      6.1. > (automovil '(Hatchback Suzuki Forza1 Rojo Si Manual))
+      6.2. > (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
+      6.3. > (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
+  7. (arbol-binario-eliminar nodo arbol)
+      7.1. > (arbol-binario-eliminar 10 '(10 (5 3 8) (15 14 18)))
+      7.2. > (arbol-binario-eliminar 3 '(10 (5 3 8) (15 14 18)))
+      7.3. > (arbol-binario-eliminar 18 '(10 (5 3 8) (15 14 18)))
+  8. (grafo-recorrer-anchura grafo)
+      8.1. > (grafo-recorrer-anchura '((A B C) ((A B) (A C) (B C))))
+      8.2. > (grafo-recorrer-anchura '((A B C D) ((A B) (B A) (B C) (C A))))
+      8.3. > (grafo-recorrer-anchura '((A B C D E F) ((A B) (A C) (A D) (B E) (B F))))
+  9. (longitud-cola lista)
+      9.1.1. > (longitud-cola '())
+      9.1.2. > (longitud-cola '(a b c))
+      9.1.3. > (longitud-cola '(1 2 3 4 5))
+     (longitud-pila lista)
+      9.2.1. > (longitud-pila '())
+      9.2.2. > (longitud-pila '(a b c))
+      9.2.3. > (longitud-pila '(1 2 3 4 5))
+|#
+
+
 #|
   Calcula el factorial de n [n! = n(n-1)!]
   @param n número entero positivo
