@@ -128,7 +128,7 @@
 )
 
 (define (arbol-binario-nodo? nodo arbol elemento)
-  (displayln arbol)
+  ;(displayln arbol)
   (cond
     ((null? arbol) #f)
     ((equal? nodo elemento) #t)
@@ -146,20 +146,62 @@
   )
 )
 
-(define (arbol-binario-eliminar-n nodo arbol)
-  (displayln "\nEliminar nodo")
-)
-
+#|
+  Elimina el nodo especificado del árbol binario especificado
+  @param nodo número real cómo nodo del árbol binario que se desea eliminar
+  @param arbol árbol binario en formato de lista de números reale
+  @return árbol binario en formato de lista de números reales sin el nodo especificado
+|#
 (define (arbol-binario-eliminar nodo arbol)
   (cond
     ((null? nodo) (error "Debe especificar el nodo del árbol binario que desea eliminar"))
     ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
     (else
       (cond
-        ((arbol-binario-nodo? nodo arbol (car arbol)) (arbol-binario-eliminar-n nodo arbol))
+        ((arbol-binario-nodo? nodo arbol (car arbol)) (displayln "Eliminar nodo"))
         (else (error "El nodo especificado no es miembro del árbol especificado"))
       )
     )
+  )
+)
+
+#|
+  Cálcula la cantidad de elementos de la lista mediante recursión,
+  se detiene cuándo la lista recibida esté vacía
+  @param lista de datos
+  @param longitud cantidad de elementos que tiene la lista
+  @return número entero que representa la cantidad de elementos de la lista
+|#
+(define (longitud-cola-aux lista longitud)
+  (cond
+    ((null? lista) longitud)
+    (else (longitud-cola-aux (cdr lista) (+ longitud 1)))
+  )
+)
+
+#|
+  Cálcula la cantidad de elementos de una lista mediante recursión de cola
+  utilizando la función longitud-cola-aux cómo función auxiliar
+  @param lista de datos
+  @return número entero que representa la cantidad de elementos de la lista
+|#
+(define (longitud-cola lista)
+  (cond
+    ((null? lista) 0)
+    (else (longitud-cola-aux lista 0))
+  )
+)
+
+#|
+  Cálcula la cantidad de elementos de una lista mediante recursión de pila,
+  se detiene cuándo la lista recibida esté vacía
+  @param lista de datos
+  @return número entero que representa la cantidad de elementos de la lista
+|#
+(define (longitud-pila lista)
+  (cond
+    ((null? lista) 0)
+    (else (+ (longitud-cola (cdr lista)) 1))
   )
 )
 
@@ -204,5 +246,13 @@
 (displayln "\n\n(grafo-recorrer-anchura grafo)\n")
 
 (displayln "\n\n(longitud-cola lista)\n")
+(longitud-cola '())
+(longitud-cola '(a b c))
+(longitud-cola '(1 2 3 4 5))
 
 (displayln "\n(longitud-pila lista)\n")
+(longitud-pila '())
+(longitud-pila '(a b c))
+(longitud-pila '(1 2 3 4 5))
+
+(displayln "")
