@@ -2,8 +2,8 @@
 
 #|
   Calcula el factorial de n [n! = n(n-1)!]
-  @param n
-  @return number
+  @param n número entero positivo
+  @return número resultante de la aplicación del Factorial
 |#
 (define (factorial n)
   (cond
@@ -14,9 +14,9 @@
 )
 
 #|
-  Calcula la serie de fibonacci de n [f_n = f_n-1 + f_n-2]
-  @param n
-  @return number
+  Calcula la serie de Fibonacci de n [f_n = f_n-1 + f_n-2]
+  @param n número entero positivo
+  @return número resultante de la aplicación de la serie Fibonacci
 |#
 (define (fibonacci n)
   (cond
@@ -28,9 +28,9 @@
 
 #|
   Verifica si el elemento es miembro de la lista
-  @param elemento
-  @param lista
-  @return boolean
+  @param elemento dato que desea verificar pertenencia en la lista
+  @param lista de datos
+  @return booleano (falso : si no es miembro de la lista , true : si es miembro de la lista)
 |#
 (define (miembro elemento lista)
   (cond
@@ -42,9 +42,9 @@
 
 #|
   Elimina todas las coincidencias del elemento en la lista
-  @param elemento
-  @param lista
-  @return list
+  @param elemento dato que se desea eliminar
+  @param lista de datos
+  @return lista sin el elemento eliminado
 |#
 (define (eliminar elemento lista)
   (cond
@@ -96,36 +96,74 @@
   )
 )
 
+#|
+  Recorre la lista de atributos y valores formando una lista con los 
+  primeros elementos de la lista de manera recursiva
+  @param valores lista de valores de los atributos especificados
+  @param atributos lista de atributos del automovil
+  @return lista de pares con el formato (atributo valor)
+|#
+(define (automovil-config valores atributos)
+  (cond
+    ((or (null? valores) (null? atributos)) '())
+    (else (cons (list (car atributos) (car valores)) (automovil-config (cdr valores) (cdr atributos))))
+  )
+)
+
+#|
+  Verifica que la cantidad de atributos y valores coincida. Utiliza la
+  función automovil-config para retornar la lista de pares con los
+  atributos y sus respectivos valores
+  @param valores lista de valores de los atributos especificados
+  @param atributos lista de atributos del automovil
+  @return lista de pares o error según el cumplimiento de condiciones
+|#
+(define (automovil valores (atributos '(Tipo Marca Modelo Color AC Transmisión)))
+  (cond
+    ((null? valores) (error "Los valores de los atributos del automóvil deben ser especificados"))
+    ((null? atributos) (error "Los atributos del automóvil deben ser especificados"))
+    ((equal? (equal? (length valores) (length atributos)) #f) (error "La cantidad de valores y atributos no coinciden"))
+    (else (automovil-config valores atributos))
+  )
+)
+
+
 ; - - - - - Test - - - - -
 
-(display "\n(factorial n)\n")
+(displayln "\n(factorial n)\n")
 (factorial 0)
 (factorial 1)
 (factorial 7)
 
-(display "\n(fibonacci n)\n")
+(displayln "\n\n(fibonacci n)\n")
 (fibonacci 0)
 (fibonacci 1)
 (fibonacci 7)
 
-(display "\n(miembro elemento lista)\n")
+(displayln "\n\n(miembro elemento lista)\n")
+(miembro null '())
 (miembro 'a '(a b c))
 (miembro 'a '(b c d))
 
-(display "\n(eliminar elemento lista)\n")
+(displayln "\n\n(eliminar elemento lista)\n")
+(eliminar 'a '(a))
 (eliminar 'a '(a b c a))
 (eliminar 'a '(b c d))
 
-(display "\n(quicksort lista)\n")
+(displayln "\n\n(quicksort lista)\n")
+(quicksort '(7 5))
 (quicksort '(3 2 1))
 (quicksort '(2 3 4 1 1 2 5))
 
-(display "\n(automovil atributos valores)\n")
+(displayln "\n\n(automovil valores atributos)\n")
+(automovil '(Hatchback Suzuki Forza1 Rojo Si Manual))
+(automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
+(automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
-(display "\n(arbol-binario-eliminar-nodo arbol)\n")
+(displayln "\n\n(arbol-binario-eliminar-nodo arbol)\n")
 
-(display "\n(grafo-recorrer-anchura grafo)\n")
+(displayln "\n\n(grafo-recorrer-anchura grafo)\n")
 
-(display "\n(longitud-cola lista)\n")
+(displayln "\n\n(longitud-cola lista)\n")
 
-(display "\n(longitud-pila lista)\n")
+(displayln "\n(longitud-pila lista)\n")
