@@ -64,6 +64,74 @@
       9.2.3. > (longitud-pila '(1 2 3 4 5))
 |#
 
+#|
+  Obtiene la unión de los elementos que pertenecen al conjunto A y al conjunto B
+  @param a conjunto A en A ∪ B
+  @param b conjunto B en A ∪ B
+  @return lista de elementos en el conjunto unión
+|#
+(define (conjuntos-union (a '()) (b '()))
+  (remove-duplicates (append a b))
+)
+
+#|
+  Obtiene los elementos que pertenecen al conjunto A y al conjunto B
+  @param a conjunto A en A ∩ B
+  @param b conjunto B en A ∩ B
+  @param interseccion lista de elementos cómo conjunto intersección
+  @return lista de elementos en el conjunto intersección
+|#
+(define (conjuntos-interseccion (a '()) (b '()) (interseccion '()))
+  (cond 
+    ((null? a) interseccion)
+    (else
+      (cond
+        ((member (car a) b) (conjuntos-interseccion (cdr a) b (append interseccion (list (car a)))))
+        (else (conjuntos-interseccion (cdr a) b interseccion))
+      )
+    )
+  )
+)
+
+#|
+  Obtiene los elementos del conjunto A que no pertenecen al conjunto B
+  @param a conjunto A en A \ B
+  @param b conjunto B en A \ B
+  @param diferencia lista de elementos cómo conjunto diferencia
+  @return lista de elementos en el conjunto diferencia
+|#
+(define (conjuntos-diferencia (a '()) (b '()) (diferencia '()))
+  (cond 
+    ((null? a) diferencia)
+    (else
+      (cond
+        ((not (member (car a) b)) (conjuntos-diferencia (cdr a) b (append diferencia (list (car a)))))
+        (else (conjuntos-diferencia (cdr a) b diferencia))
+      )
+    )
+  )
+)
+
+#|
+  Obtiene los elementos del conjunto A que no pertenecen al conjunto B
+  y los elementos del conjunto B que no pertenecen al conjunto A
+  @param a conjunto A en A Δ B
+  @param b conjunto B en A Δ B
+  @return lista de elementos en el conjunto diferencia simétrica
+|#
+(define (conjuntos-diferencia-simetrica (a '()) (b '()))
+  (append (conjuntos-diferencia a b) (conjuntos-diferencia b a))
+)
+
+#|
+  Obtiene los elementos del conjunto Universo que no pertenecen al conjunto A
+  @param a conjunto A
+  @param universo conjunto Universo
+  @return lista de elementos en el conjunto complemento de A
+|#
+(define (conjuntos-complemento (a '()) (universo '()))
+  (conjuntos-diferencia universo a)
+)
 
 #|
   Calcula el factorial de n [n! = n(n-1)!]
@@ -282,8 +350,8 @@
 #|
   Aplica el algorimo de Búsqueda en Amplitud (BFS) de manera recursiva al grafo recibido
   @param grafo grafo no dirigido con la forma ((n_1 (a_1 a_n)) (n_n (a_1 a_n)))
-  @param cola lista de nodos por visitar del grafo, inicia con los vecinos inmediatos del nodo de referencia
-  @param ruta lista de nodos visitados del grafo, inicia con el nodo de referencia cómo primer elemento
+  @param cola lista de nodos por visitar del grafo, inicia con el nodo de referencia cómo primer elemento
+  @param ruta lista de nodos visitados del grafo
   @return lista de nodos visitados en el orden BFS
 |#
 (define (grafo-extender grafo (cola '()) (ruta '()))
@@ -312,7 +380,7 @@
     ((or (null? grafo) (not (grafo-valido? grafo))) (error "Grafo no válido"))
     ((null? nodo) (error "Nodo inicial de recorrido debe ser especificado"))
     ((not (grafo-nodo? nodo grafo)) (error "Nodo inicial de recorrido no pertenece al grafo"))
-    (else (grafo-extender grafo (grafo-vecinos nodo grafo) (list nodo)))
+    (else (grafo-extender grafo (list nodo)))
   )
 )
 
@@ -410,3 +478,8 @@
 (longitud-pila '(1 2 3 4 5))
 
 (displayln "")
+(conjuntos-union '(a b c) '(c d e))
+(conjuntos-interseccion '(a b c) '(a b e))
+(conjuntos-diferencia '(a b c) '(a b e))
+(conjuntos-diferencia-simetrica '(a b c) '(a b e))
+(conjuntos-complemento '(a b c) '(a b e))
