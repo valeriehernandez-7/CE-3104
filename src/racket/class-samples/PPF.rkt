@@ -51,9 +51,9 @@
       7.2. > (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
       7.3. > (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
   8. (grafo-busqueda-anchura grafo nodo)
-      8.1. > (grafo-busqueda-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
-      8.2. > (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-      8.3. > (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+      8.1. > (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+      8.2. > (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+      8.3. > (grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
   9. (longitud-cola lista)
       9.1.1. > (longitud-cola '())
       9.1.2. > (longitud-cola '(a b c))
@@ -355,7 +355,7 @@
   @return lista de nodos visitados en el orden BFS
 |#
 (define (grafo-extender grafo (cola '()) (ruta '()))
-  (display cola) (display "\t") (displayln ruta)
+  ;(display cola) (display "\t\t\t") (displayln ruta)
   (cond 
     ((null? cola) ruta)
     (else
@@ -363,7 +363,7 @@
         ((not (member (car cola) ruta))
           (grafo-extender 
             grafo 
-            (append (cdr cola) (conjuntos-diferencia (conjuntos-diferencia (grafo-vecinos (car cola) grafo) ruta) cola)) 
+            (append (cdr cola) (conjuntos-diferencia (conjuntos-diferencia (grafo-vecinos (car cola) grafo) ruta) cola))
             (append ruta (list (car cola)))
           )
         )
@@ -468,12 +468,8 @@
 (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
 
 (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
-(grafo-busqueda-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
-(displayln "\n")
 (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-(displayln "\n")
 (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
-(displayln "\n")
 (grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
 
 (displayln "\n\n(longitud-cola lista)\n")
@@ -485,10 +481,3 @@
 (longitud-pila '())
 (longitud-pila '(a b c))
 (longitud-pila '(1 2 3 4 5))
-
-(displayln "")
-(conjuntos-union '(a b c) '(c d e))
-(conjuntos-interseccion '(a b c) '(a b e))
-(conjuntos-diferencia '(a b c) '(a b e))
-(conjuntos-diferencia-simetrica '(a b c) '(a b e))
-(conjuntos-complemento '(a b c) '(a b e))
