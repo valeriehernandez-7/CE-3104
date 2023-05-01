@@ -274,41 +274,22 @@
 )
 
         ; ((> (length vecinos) 1)
-          
+          ;(vecinos '()) 
         ; )
 
-(define (grafo-extender grafo (vecinos '()) (ruta '()))
-  (display "grafo ") (displayln grafo)
-  (display "vecinos ") (displayln vecinos)
-  (display "ruta ")(displayln ruta)
+(define (grafo-extender grafo (cola '()) (ruta '()))
   (displayln "\n")
+  (display "grafo ") (displayln grafo)
+  (display "cola ") (displayln cola)
+  (display "ruta ")(displayln ruta)
   (cond 
-    ((null? vecinos) ruta)
+    ((null? cola) ruta)
     (else
       (cond
-        ((not (miembro? (car vecinos) ruta))
-          (append ruta (list (car vecinos)))
+        ((not (member (car cola) ruta))
+          (grafo-extender grafo (append (cdr cola) (grafo-vecinos (car cola) grafo)) (append ruta (car cola)))
         )
-      )
-      (cond
-        ; ((not (miembro? (car vecinos) ruta)) 
-        ;   (append ruta (list (car vecinos)))
-        ;   (cond
-        ;       ((> (length vecinos) 1) 
-        ;         (grafo-extender grafo (cadr vecinos) (grafo-vecinos (cadr vecinos) grafo) ruta)
-        ;       )
-        ;       (else (grafo-extender grafo (car vecinos) (grafo-vecinos (car vecinos) grafo) ruta))
-        ;   )
-        ; )
-        ((not (miembro? (car (list cola)) ruta)) 
-          (append ruta (list (car (list cola))))
-          (cond
-              ((> (length vecinos) 1) 
-                (grafo-extender grafo (cadr vecinos) (grafo-vecinos (cadr vecinos) grafo) ruta)
-              )
-              (else (grafo-extender grafo (car vecinos) (grafo-vecinos (car vecinos) grafo) ruta))
-          )
-        )
+        (else (grafo-extender grafo (cdr cola) ruta))
       )
     )
   )
