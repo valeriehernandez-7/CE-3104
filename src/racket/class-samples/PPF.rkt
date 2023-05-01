@@ -50,10 +50,10 @@
       7.1. > (arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
       7.2. > (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
       7.3. > (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
-  8. (grafo-recorrer-anchura grafo nodo)
-      8.1. > (grafo-recorrer-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
-      8.2. > (grafo-recorrer-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-      8.3. > (grafo-recorrer-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+  8. (grafo-busqueda-anchura grafo nodo)
+      8.1. > (grafo-busqueda-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
+      8.2. > (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+      8.3. > (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
   9. (longitud-cola lista)
       9.1.1. > (longitud-cola '())
       9.1.2. > (longitud-cola '(a b c))
@@ -253,20 +253,47 @@
   @param grafo grafo que desea recorrer
   @return booleano (falso : el nodo no pertenece al grafo, true : el nodo si pertenece al grafo)
 |#
-(define (grafo-miembro? nodo grafo)
+(define (grafo-nodo? nodo grafo)
   (cond
     ((null? grafo) #f)
     ((equal? nodo (caar grafo)) #t)
-    (else (grafo-miembro? nodo (cdr grafo)))
+    (else (grafo-nodo? nodo (cdr grafo)))
   )
 )
 
-(define (grafo-recorrer-anchura grafo (nodo (caar grafo)))
+(define (grafo-vecinos nodo grafo (vecinos '()))
+  (cond 
+    ((null? grafo) vecinos)
+    (else
+      (cond
+        ((equal? nodo (caar grafo)) (append vecinos (cadar grafo)))
+        (else (grafo-vecinos nodo (cdr grafo) vecinos))
+      )
+    )
+  )
+)
+
+(define (grafo-extender grafo (vecinos '()) (ruta '()))
+  (displayln vecinos)
+  (displayln ruta)
+  (displayln "\n")
+  (cond 
+    ((null? vecinos) ruta)
+    (else
+      (cond
+        ((not (miembro? (car vecinos) ruta)) (append ruta (list (car vecinos))))
+        (else (grafo-extender grafo (grafo-vecinos (car vecinos) grafo) ruta))
+      )
+    )
+  )
+)
+
+(define (grafo-busqueda-anchura grafo (nodo (caar grafo)))
   (cond
     ((or (null? grafo) (not (grafo-valido? grafo))) (error "Grafo no válido"))
     ((null? nodo) (error "Nodo inicial de recorrido debe ser especificado"))
-    ((not (grafo-miembro? nodo grafo)) (error "Nodo inicial de recorrido no pertenece al grafo"))
-    (else (displayln "Recorrer grafo"))
+    ((not (grafo-nodo? nodo grafo)) (error "Nodo inicial de recorrido no pertenece al grafo"))
+    (else (grafo-extender grafo (grafo-vecinos nodo grafo) (list nodo)))
   )
 )
 
@@ -356,15 +383,18 @@
 (grafo-valido? '((A B) (B (A C)) (C (A B))))
 (grafo-valido? '((A ()) (B (A C)) (C (A B))))
 
-(displayln "\n\n(grafo-miembro? nodo grafo)\n")
-(grafo-miembro? 'A '((A (B C)) (B (A C)) (C (A B))))
-(grafo-miembro? 'C '((A (B C)) (B (A C)) (C (A B))))
-(grafo-miembro? 'X '((A (B C)) (B (A C)) (C (A B))))
+(displayln "\n\n(grafo-nodo? nodo grafo)\n")
+(grafo-nodo? 'A '((A (B C)) (B (A C)) (C (A B))))
+(grafo-nodo? 'C '((A (B C)) (B (A C)) (C (A B))))
+(grafo-nodo? 'X '((A (B C)) (B (A C)) (C (A B))))
 
-(displayln "\n\n(grafo-recorrer-anchura grafo nodo)\n")
-(grafo-recorrer-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
-(grafo-recorrer-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-(grafo-recorrer-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+(displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
+(displayln "GRAFO 1")
+(grafo-busqueda-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
+(displayln "\nGRAFO 2")
+(grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+(displayln "\nGRAFO 3")
+(grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
 
 (displayln "\n\n(longitud-cola lista)\n")
 (longitud-cola '())
