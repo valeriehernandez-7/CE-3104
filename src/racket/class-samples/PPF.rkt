@@ -355,9 +355,7 @@
   @return lista de nodos visitados en el orden BFS
 |#
 (define (grafo-extender grafo (cola '()) (ruta '()))
-  (display "ruta") (displayln ruta)
-  (display "cola\t") (displayln cola)
-  (displayln "\n")
+  (display cola) (display "\t") (displayln ruta)
   (cond 
     ((null? cola) ruta)
     (else
@@ -365,7 +363,7 @@
         ((not (member (car cola) ruta))
           (grafo-extender 
             grafo 
-            (append (cdr cola) (conjuntos-diferencia (grafo-vecinos (car cola) grafo) ruta)) 
+            (append (cdr cola) (conjuntos-diferencia (conjuntos-diferencia (grafo-vecinos (car cola) grafo) ruta) cola)) 
             (append ruta (list (car cola)))
           )
         )
@@ -471,8 +469,12 @@
 
 (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
 (grafo-busqueda-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
+(displayln "\n")
 (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+(displayln "\n")
 (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+(displayln "\n")
+(grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
 
 (displayln "\n\n(longitud-cola lista)\n")
 (longitud-cola '())
