@@ -355,12 +355,19 @@
   @return lista de nodos visitados en el orden BFS
 |#
 (define (grafo-extender grafo (cola '()) (ruta '()))
+  (display "ruta") (displayln ruta)
+  (display "cola\t") (displayln cola)
+  (displayln "\n")
   (cond 
     ((null? cola) ruta)
     (else
       (cond
         ((not (member (car cola) ruta))
-          (grafo-extender grafo (append (cdr cola) (grafo-vecinos (car cola) grafo)) (append ruta (list (car cola))))
+          (grafo-extender 
+            grafo 
+            (append (cdr cola) (conjuntos-diferencia (grafo-vecinos (car cola) grafo) ruta)) 
+            (append ruta (list (car cola)))
+          )
         )
         (else (grafo-extender grafo (cdr cola) ruta))
       )
