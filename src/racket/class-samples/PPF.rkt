@@ -193,7 +193,6 @@
 )
 
 (define (arbol-binario-nodo? nodo arbol elemento)
-  ;(displayln arbol)
   (cond
     ((null? arbol) #f)
     ((equal? nodo elemento) #t)
@@ -261,6 +260,13 @@
   )
 )
 
+#|
+  Obtiene los vecinos inmediatos de un nodo de un grafo
+  @param nodo nodo del cual se desea obtener los vecinos inmediatos
+  @param grafo grafo en el que se desea buscar los vecinos inmediatos del nodo especificado
+  @param vecinos lista de nodos vecinos inmediatos del nodo especificado
+  @return lista de nodos vecinos inmediatos del nodo especificado
+|#
 (define (grafo-vecinos nodo grafo (vecinos '()))
   (cond 
     ((null? grafo) vecinos)
@@ -273,21 +279,20 @@
   )
 )
 
-        ; ((> (length vecinos) 1)
-          ;(vecinos '()) 
-        ; )
-
+#|
+  Aplica el algorimo de Búsqueda en Amplitud (BFS) de manera recursiva al grafo recibido
+  @param grafo grafo no dirigido con la forma ((n_1 (a_1 a_n)) (n_n (a_1 a_n)))
+  @param cola lista de nodos por visitar del grafo, inicia con los vecinos inmediatos del nodo de referencia
+  @param ruta lista de nodos visitados del grafo, inicia con el nodo de referencia cómo primer elemento
+  @return lista de nodos visitados en el orden BFS
+|#
 (define (grafo-extender grafo (cola '()) (ruta '()))
-  (displayln "\n")
-  (display "grafo ") (displayln grafo)
-  (display "cola ") (displayln cola)
-  (display "ruta ")(displayln ruta)
   (cond 
     ((null? cola) ruta)
     (else
       (cond
         ((not (member (car cola) ruta))
-          (grafo-extender grafo (append (cdr cola) (grafo-vecinos (car cola) grafo)) (append ruta (car cola)))
+          (grafo-extender grafo (append (cdr cola) (grafo-vecinos (car cola) grafo)) (append ruta (list (car cola))))
         )
         (else (grafo-extender grafo (cdr cola) ruta))
       )
@@ -295,6 +300,13 @@
   )
 )
 
+#|
+  Verifica la validez de los parámetros y luego envía los datos a la función grafo-extender
+  para que sea aplicado el algoritmo BFS al grafo especificado
+  @param grafo grafo no dirigido con la forma ((n_1 (a_1 a_n)) (n_n (a_1 a_n)))
+  @param nodo nodo de referencia para el recorrido BFS, si no se especifica la función toma el primer nodo cómo referente
+  @return lista de nodos visitados en el orden BFS
+|#
 (define (grafo-busqueda-anchura grafo (nodo (caar grafo)))
   (cond
     ((or (null? grafo) (not (grafo-valido? grafo))) (error "Grafo no válido"))
@@ -382,25 +394,9 @@
 (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
 (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
 
-(displayln "\n\n(grafo-valido? grafo)\n")
-(grafo-valido? '((A (B C)) (B (A C)) (C (A B))))
-(grafo-valido? '(A (B (A C)) (C (A B))))
-(grafo-valido? '((A) (B (A C)) (C (A B))))
-(grafo-valido? '(((A) (B C)) (B (A C)) (C (A B))))
-(grafo-valido? '((A B) (B (A C)) (C (A B))))
-(grafo-valido? '((A ()) (B (A C)) (C (A B))))
-
-(displayln "\n\n(grafo-nodo? nodo grafo)\n")
-(grafo-nodo? 'A '((A (B C)) (B (A C)) (C (A B))))
-(grafo-nodo? 'C '((A (B C)) (B (A C)) (C (A B))))
-(grafo-nodo? 'X '((A (B C)) (B (A C)) (C (A B))))
-
 (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
-(displayln "GRAFO 1")
 (grafo-busqueda-anchura '((A (B C)) (B (A C)) (C (A B))) 'B)
-(displayln "\nGRAFO 2")
 (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-(displayln "\nGRAFO 3")
 (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
 
 (displayln "\n\n(longitud-cola lista)\n")
