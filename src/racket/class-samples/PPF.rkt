@@ -65,6 +65,8 @@
       9.2.1. > (longitud-pila '())
       9.2.2. > (longitud-pila '(a b c))
       9.2.3. > (longitud-pila '(1 2 3 4 5))
+
+  NOTA: Casos de prueba al final del documento
 |#
 
 #|
@@ -320,10 +322,6 @@
   )
 )
 
-(define (arbol-binario-hijo-izq? nodo arbol)
-  (equal? nodo (arbol-binario-hijo-izq arbol))
-)
-
 (define (arbol-binario-hijo-der arbol)
   (cond
     ((list? arbol)
@@ -339,10 +337,6 @@
     )
     (else '())
   )
-)
-
-(define (arbol-binario-hijo-der? nodo arbol)
-  (equal? nodo (arbol-binario-hijo-der arbol))
 )
 
 (define (arbol-binario-subarbol-izq arbol)
