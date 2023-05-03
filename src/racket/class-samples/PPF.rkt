@@ -3,18 +3,19 @@
 
 #|
   Valerie M. Hernández Fernández
-  <a href="mailto:valeriehernandez@estudiantec.cr">@estudiantec</a>
-  <a href="https://github.com/valeriehernandez-7">@github</a>
+  valeriehernandez@estudiantec.cr
+  https://github.com/valeriehernandez-7
 
   Programación Funcional
   Taller
 
   Instituto Tecnológico de Costa Rica
+  Campus Tecnológico Central Cartago
   Área Académica Ingeniería en Computadores
 
   CE 3104 Lenguajes, Compiladores e Intérpretes
   Ing. Marco Rivera Meneses, MGP
-  Grupo 1
+  Grupo 01
 
   I Semestre
   2023
