@@ -136,6 +136,7 @@
   (conjuntos-diferencia universo a)
 )
 
+
 #|
   Invierte el orden de la lista
   @param lista lista de elementos que desea invertir
@@ -148,6 +149,7 @@
     (else (invertir (cdr lista) (cons (car lista) invertida)))
   )
 )
+
 
 #|
   Calcula el factorial de n [n! = n(n-1)!]
@@ -162,6 +164,7 @@
   )
 )
 
+
 #|
   Calcula la serie de Fibonacci de n [f_n = f_n-1 + f_n-2]
   @param n número entero positivo
@@ -174,6 +177,7 @@
     (else (+ (fibonacci (- n 1)) (fibonacci (- n 2))))
   )
 )
+
 
 #|
   Verifica si el elemento es miembro de la lista
@@ -189,6 +193,7 @@
   )
 )
 
+
 #|
   Elimina todas las coincidencias del elemento en la lista
   @param elemento dato que se desea eliminar
@@ -202,6 +207,7 @@
     (else (cons (car lista) (eliminar elemento (cdr lista))))
   )
 )
+
 
 #|
   Filtra de manera ascendente la lista recibida comparando 
@@ -245,6 +251,7 @@
   )
 )
 
+
 #|
   Recorre la lista de atributos y valores formando una lista con los 
   primeros elementos de la lista de manera recursiva
@@ -276,23 +283,58 @@
   )
 )
 
-(define (arbol-binario-nodo? nodo arbol (elemento (car arbol)))
+
+(define (arbol-binario-raiz arbol)
   (cond
-    ((null? arbol) #f)
-    ((equal? nodo elemento) #t)
-    (else 
-      (cond
-        ((list? (car arbol))
-          (cond
-            ((> (length (car arbol)) 1) (arbol-binario-nodo? nodo (cons (cdar arbol) (cdr arbol)) (caar arbol)))
-            (else (arbol-binario-nodo? nodo (append (car arbol) (cdr arbol)) (caar arbol)))
-          )
-        )
-        (else (arbol-binario-nodo? nodo (cdr arbol) (car arbol)))
-      )
-    )
+    ((list? arbol) (car arbol))
+    (else null)
   )
 )
+
+(define (arbol-binario-hijo-izq arbol)
+  (cond
+    ((list? arbol) (cadr arbol))
+    (else null)
+  )
+)
+
+
+(define (arbol-binario-hijo-der arbol)
+  (cond
+    ((list? arbol) 
+      (cond 
+        ((equal? (length arbol) 3) (caddr arbol))
+        (else null)
+      )
+    ) 
+    (else null)
+  )
+)
+
+; (define (arbol-binario-hoja? nodo)
+;   (and (null? (arbol-binario-hijo-der nodo)) (null? (arbol-binario-hijo-izq nodo)))
+; )
+
+; (define (arbol-binario-nodo? nodo (arbol '()) (raiz (car arbol)))
+;   (cond
+;     ((or (null? nodo) (null? arbol)) #f)
+;     ((equal? nodo raiz) #t)
+;     (else
+;       (cond
+;         ((< nodo raiz)
+;           (arbol-binario-nodo? nodo)
+;         )
+;       )
+;     )
+;   )
+; )
+
+; (define (arbol-binario-raiz (arbol '()))
+;   (cond
+;     ((< (length arbol) 1) (error "Árbol no válido"))
+;     (else (car arbol))
+;   )
+; )
 
 #|
   Elimina el nodo especificado del árbol binario especificado
@@ -300,18 +342,18 @@
   @param arbol árbol binario en formato de lista de números reale
   @return árbol binario en formato de lista de números reales sin el nodo especificado
 |#
-(define (arbol-binario-eliminar nodo arbol)
-  (cond
-    ((null? nodo) (error "Debe especificar el nodo del árbol binario que desea eliminar"))
-    ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
-    (else
-      (cond
-        ((arbol-binario-nodo? nodo arbol) (displayln "Eliminar nodo"))
-        (else (error "El nodo especificado no es miembro del árbol especificado"))
-      )
-    )
-  )
-)
+; (define (arbol-binario-eliminar nodo arbol)
+;   (cond
+;     ((null? nodo) (error "Debe especificar el nodo del árbol binario que desea eliminar"))
+;     ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
+;     (else
+;       (cond
+;         ((arbol-binario-nodo? nodo arbol) (displayln "Eliminar nodo"))
+;         (else (error "El nodo especificado no es miembro del árbol especificado"))
+;       )
+;     )
+;   )
+; )
 
 
 
@@ -480,10 +522,14 @@
 ; (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
 ; (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
-(displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
-(arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
-(arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
-(arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
+; (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
+; (arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
+; (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
+;(arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
+
+
+
+(null? (arbol-binario-hijo-der '(a b)))
 
 ; (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
 ; (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
