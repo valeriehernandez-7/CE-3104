@@ -285,6 +285,13 @@
   )
 )
 
+#|
+  Crea un árbol binario para algoritmo de preorden (R I D)
+  @param raiz raiz del árbol binario
+  @param hijo-izq sub-árbol izquierdo del árbol binario
+  @param hijo-der sub-árbol derecho del árbol binario
+  @return árbol binario
+|#
 (define (arbol-binario raiz hijo-izq hijo-der)
   (cond
     ((null? raiz) '())
@@ -297,6 +304,11 @@
   )
 )
 
+#|
+  Retorna la raíz del árbol binario
+  @param arbol árbol binario
+  @return raíz del árbol binario
+|#
 (define (arbol-binario-raiz arbol)
   (cond
     ((null? arbol) '())
@@ -305,6 +317,11 @@
   )
 )
 
+#|
+  Obtiene el hijo izquierdo de la raíz del árbol
+  @param arbol árbol binario
+  @return retorna el hijo izquierdo de la raíz del árbol
+|#
 (define (arbol-binario-hijo-izq arbol)
   (cond
     ((list? arbol)
@@ -322,6 +339,11 @@
   )
 )
 
+#|
+  Obtiene el hijo derecho de la raíz del árbol
+  @param arbol árbol binario
+  @return retorna el hijo derecho de la raíz del árbol
+|#
 (define (arbol-binario-hijo-der arbol)
   (cond
     ((list? arbol)
@@ -339,6 +361,11 @@
   )
 )
 
+#|
+  Obtiene el sub-árbol izquierdo de la raíz del árbol
+  @param arbol árbol binario
+  @return retorna el sub-árbol izquierdo de la raíz del árbol
+|#
 (define (arbol-binario-subarbol-izq arbol)
   (cond
     ((list? arbol) (second arbol))
@@ -346,6 +373,11 @@
   )
 )
 
+#|
+  Obtiene el sub-árbol derecho de la raíz del árbol
+  @param arbol árbol binario
+  @return retorna el sub-árbol derecho de la raíz del árbol
+|#
 (define (arbol-binario-subarbol-der arbol)
   (cond
     ((list? arbol) (third arbol))
@@ -353,6 +385,11 @@
   )
 )
 
+#|
+  Obtiene el nodo mayor del árbol
+  @param arbol árbol binario
+  @return retorna el nodo mayor del árbol
+|#
 (define (arbol-binario-mayor arbol)
   (cond 
     ((null? arbol) '())
@@ -361,6 +398,13 @@
   )
 )
 
+#|
+  Verifica si un nodo pertenece a un árbol binario recorriendo el árbol en preorden
+  @param nodo nodo en árbol binario
+  @param arbol árbol binario
+  @param raiz raíz del árbol binario
+  @return booleano (falso : el nodo no pertenece al árbol, true : el nodo si pertenece al árbol)
+|#
 (define (arbol-binario-nodo? nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
     ((null? arbol) #f)
@@ -374,6 +418,13 @@
   )
 )
 
+#|
+  Verifica si un nodo es una hoja de un árbol binario recorriendo el árbol en preorden
+  @param nodo nodo en árbol binario
+  @param arbol árbol binario
+  @param raiz raíz del árbol binario
+  @return booleano (falso : el nodo no es una hoja del árbol, true : el nodo es una hoja del árbol)
+|#
 (define (arbol-binario-hoja? nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
     ((null? arbol) #f)
@@ -387,6 +438,12 @@
   )
 )
 
+#|
+  Obtiene el sub-árbol en el que se encuentre un nodo del árbol binario recorriendolo en preorden
+  @param nodo nodo del árbol
+  @param arbol árbol binario
+  @return sub-árbol al que pertence el nodo
+|#
 (define (arbol-binario-subarbol nodo arbol)
   (cond
     ((null? arbol) '())
@@ -400,6 +457,15 @@
   )
 )
 
+#|
+  Recorre un árbol binario en preorden en busca del nodo por eliminar, cuándo el nodo es encontrado
+  verifica si es una hoja o una raíz. En caso de ser raíz busca el nodo mayor en sus sub-arboles 
+  cómo raíz y genera un árbol binario actualizado
+  @param nodo nodo del árbol binario que desea eliminar
+  @param arbol árbol binario
+  @param raiz raíz del árbol binario
+  @return árbol binario sin el nodo eliminado
+|#
 (define (arbol-binario-eliminar-aux nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
     ((null? arbol) '())
