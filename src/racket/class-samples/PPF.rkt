@@ -412,47 +412,50 @@
 
 ; (arbol-binario-eliminar '12 '(10 (5 2 8) (15 12 17)))
 ; (arbol-binario-eliminar '17 '(10 (5 2 8) (15 () 17)))
+; (arbol-binario-eliminar '7 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
 ; (arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
 
-'(10 
-    (5 (2 1 3) (8 7 9))
-    (15 (12 11 13) (17 16 18))
-)
+; '(10 
+;     (5 (2 1 3) (8 7 9))
+;     (15 (12 11 13) (17 16 18))
+; )
 
-'(10 
-    (5 (2 1 3) (8 7 9)) 
-    (12 11 13) 
-    (17 16 ())
-)
+'((10 (5 2 8)) (15 () 17))
+'((10 (5 2 8)) 15)
+'((10 (15 (12 11 13) (17 16 18))) (5 (2 1 3)) (8 () 9))
+'((10 (5 (2 1 3) (8 7 9))) (15 (12 11 13)) (17 16 ()))
 
-(define (arbol-binario-eliminar-hoja nodo subarbol arbol (resultado (list (arbol-binario-raiz arbol))))
-  (display "arbol ") (displayln arbol)
-  (display "resultado ") (displayln resultado)
-  (displayln "\n")
+
+(define (arbol-binario-eliminar-hoja nodo subarbol arbol (resultado '()))
   (cond
     ((null? arbol) resultado)
     ((equal? (arbol-binario-raiz subarbol) (arbol-binario-raiz arbol))
       (cond
         ((arbol-binario-hijo-izq? nodo subarbol)
-           (append resultado (arbol-binario (arbol-binario-raiz arbol) '() (arbol-binario-hijo-der arbol)))
+           (append resultado (arbol-binario (arbol-binario-raiz arbol) '() (arbol-binario-subarbol-der arbol)))
         )
         ((arbol-binario-hijo-der? nodo subarbol)
-          (append resultado (arbol-binario (arbol-binario-raiz arbol) (arbol-binario-hijo-izq arbol) '()))
+          (append resultado (arbol-binario (arbol-binario-raiz arbol) (arbol-binario-subarbol-izq arbol) '()))
         )
       )
     )
     (else
       (cond
         ((< nodo (arbol-binario-raiz arbol)) 
-          (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-izq arbol) (append resultado (list (arbol-binario-subarbol-der arbol))))
+          (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-izq arbol) (append resultado (cons (arbol-binario-raiz arbol) (list (arbol-binario-subarbol-der arbol)))))
         )
-        (else 
-          (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-der arbol) (append resultado (list (arbol-binario-subarbol-izq arbol))))
+        (else
+          (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-der arbol) (append resultado (cons (arbol-binario-raiz arbol) (list (arbol-binario-subarbol-izq arbol)))))
         )
       )
     )
   )
 )
+
+'(10 ((5 2 8)) (15 () 17))
+'(10 ((5 2 8)) 15)
+'(10 ((15 (12 11 13) (17 16 18))) 5 ((2 1 3)) (8 () 9))
+'(10 ((5 (2 1 3) (8 7 9))) 15 ((12 11 13)) (17 16 ()))
 
 (define (arbol-binario-eliminar-aux nodo arbol)
   (cond
@@ -663,11 +666,8 @@
 
 (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
 (arbol-binario-eliminar '12 '(10 (5 2 8) (15 12 17)))
-(displayln "\n")
-(displayln "\n")
 (arbol-binario-eliminar '17 '(10 (5 2 8) (15 () 17)))
-(displayln "\n")
-(displayln "\n")
+(arbol-binario-eliminar '7 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
 (arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
 
 (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
