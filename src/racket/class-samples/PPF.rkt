@@ -2,7 +2,9 @@
 
 
 #|
-  Hernández Fernández Valerie M.
+  Valerie M. Hernández Fernández
+  <a href="mailto:valeriehernandez@estudiantec.cr">@estudiantec</a>
+  <a href="https://github.com/valeriehernandez-7">@github</a>
 
   Programación Funcional
   Taller
@@ -142,9 +144,7 @@
 (define (invertir lista (invertida '()))
   (cond
     ((null? lista) invertida)
-    (else
-      (invertir (cdr lista) (cons (car lista) invertida))
-    )
+    (else (invertir (cdr lista) (cons (car lista) invertida)))
   )
 )
 
