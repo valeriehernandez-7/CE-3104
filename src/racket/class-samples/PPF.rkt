@@ -393,7 +393,6 @@
   )
 )
 
-
 (define (arbol-binario-subarbol nodo arbol)
   (cond
     ((null? arbol) '())
@@ -406,10 +405,6 @@
     )
   )
 )
-
-; (arbol-binario-eliminar '8 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
-; (arbol-binario-eliminar '12 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 ()) (17 16 18))))
-; (arbol-binario-eliminar '17 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 () 18))))
 
 (define (arbol-binario-eliminar-aux nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
