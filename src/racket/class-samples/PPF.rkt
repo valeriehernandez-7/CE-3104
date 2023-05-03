@@ -272,13 +272,13 @@
   atributos y sus respectivos valores
   @param valores lista de valores de los atributos especificados
   @param atributos lista de atributos del automovil
-  @return lista de pares o error según el cumplimiento de condiciones
+  @return lista de pares o displayln según el cumplimiento de condiciones
 |#
 (define (automovil valores (atributos '(Tipo Marca Modelo Color AC Transmisión)))
   (cond
-    ((null? valores) (error "Los valores de los atributos del automóvil deben ser especificados"))
-    ((null? atributos) (error "Los atributos del automóvil deben ser especificados"))
-    ((not (equal? (length valores) (length atributos))) (error "La cantidad de valores y atributos no coinciden"))
+    ((null? valores) (displayln "ERROR: Los valores de los atributos del automóvil deben ser especificados"))
+    ((null? atributos) (displayln "ERROR: Los atributos del automóvil deben ser especificados"))
+    ((not (equal? (length valores) (length atributos))) (displayln "ERROR: La cantidad de valores y atributos no coinciden"))
     (else (automovil-config valores atributos))
   )
 )
@@ -296,8 +296,9 @@
 
 (define (arbol-binario-raiz arbol)
   (cond
+    ((null? arbol) '())
     ((list? arbol) (car arbol))
-    (else '())
+    (else arbol)
   )
 )
 
@@ -317,8 +318,13 @@
   (cond
     ((list? arbol)
       (cond
-        ((list? (caddr arbol)) (caaddr arbol))
-        (else (caddr arbol))
+        ((equal? (length arbol) 3)
+          (cond
+            ((list? (caddr arbol)) (caaddr arbol))
+            (else (caddr arbol))
+          )
+        )
+        (else '())
       )
     )
     (else '())
@@ -339,13 +345,13 @@
   )
 )
 
-; (define (arbol-binario-hoja? nodo)
-;   (and (null? (arbol-binario-hijo-der nodo)) (null? (arbol-binario-hijo-izq nodo)))
-; )
+(define (arbol-binario-hoja? nodo arbol)
+  (and (null? (arbol-binario-hijo-der nodo)) (null? (arbol-binario-hijo-izq nodo)))
+)
 
-(define (arbol-binario-nodo? nodo (arbol '()) (raiz (car arbol)))
+(define (arbol-binario-nodo? nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
-    ((or (null? nodo) (null? arbol)) #f)
+    ((null? arbol) #f)
     ((equal? nodo raiz) #t)
     (else
       (cond
@@ -364,12 +370,17 @@
 |#
 (define (arbol-binario-eliminar nodo arbol)
   (cond
-    ((null? nodo) (error "Debe especificar el nodo del árbol binario que desea eliminar"))
-    ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
+    ((null? nodo) (displayln "ERROR: Debe especificar el nodo del árbol binario que desea eliminar"))
+    ((null? arbol) (displayln "ERROR: El árbol binario debe contener al menos un elemento"))
     (else
       (cond
         ((arbol-binario-nodo? nodo arbol) (displayln "Eliminar nodo"))
-        (else (error "El nodo especificado no es miembro del árbol especificado"))
+        (else
+          (display "ERROR: ")
+          (display nodo)
+          (display " no es un nodo del árbol binario ")
+          (displayln arbol)
+        )
       )
     )
   )
@@ -462,9 +473,14 @@
 |#
 (define (grafo-busqueda-anchura grafo (nodo (caar grafo)))
   (cond
-    ((or (null? grafo) (not (grafo-valido? grafo))) (error "Grafo no válido"))
-    ((null? nodo) (error "Nodo inicial de recorrido debe ser especificado"))
-    ((not (grafo-nodo? nodo grafo)) (error "Nodo inicial de recorrido no pertenece al grafo"))
+    ((or (null? grafo) (not (grafo-valido? grafo))) (displayln "ERROR: Grafo no válido"))
+    ((null? nodo) (displayln "ERROR: Nodo inicial de recorrido debe ser especificado"))
+    ((not (grafo-nodo? nodo grafo))
+      (display "ERROR: ")
+      (display nodo)
+      (display " no es un nodo del grafo ")
+      (displayln grafo)
+    )
     (else (grafo-extender grafo (list nodo)))
   )
 )
@@ -548,26 +564,12 @@
 ;(arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
 
 
-(arbol-binario-raiz '(10 5 15))
-(arbol-binario-raiz '(10 (5 3 8) (15 14 18)))
-(arbol-binario-raiz '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
 (displayln "\n")
-(arbol-binario-hijo-izq '(10 5 15))
-(arbol-binario-hijo-izq '(10 (5 3 8) (15 14 18)))
-(arbol-binario-hijo-izq '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
-(displayln "\n")
-(arbol-binario-subarbol-izq '(10 5 15))
-(arbol-binario-subarbol-izq '(10 (5 3 8) (15 14 18)))
-(arbol-binario-subarbol-izq '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
-(displayln "\n")
-(arbol-binario-hijo-der'(10 5 15))
-(arbol-binario-hijo-der '(10 (5 3 8) (15 14 18)))
-(arbol-binario-hijo-der '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
-(displayln "\n")
+(arbol-binario-eliminar '5 '(10 5 15))
+(arbol-binario-eliminar '15 '(10 (5 2 8) (15 17)))
+(arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
 
-(arbol-binario-subarbol-der'(10 5 15))
-(arbol-binario-subarbol-der '(10 (5 3 8) (15 14 18)))
-(arbol-binario-subarbol-der '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
+(displayln "\n")
 
 ; (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
 ; (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
