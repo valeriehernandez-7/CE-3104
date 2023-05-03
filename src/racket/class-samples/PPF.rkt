@@ -50,9 +50,9 @@
       6.2. > (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
       6.3. > (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
   7. (arbol-binario-eliminar nodo arbol)
-      7.1. > (arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
-      7.2. > (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
-      7.3. > (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
+      7.1. > (arbol-binario-eliminar '5 '(10 5 15))
+      7.2. > (arbol-binario-eliminar '15 '(10 (5 2 8) (15 17)))
+      7.3. > (arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
   8. (grafo-busqueda-anchura grafo nodo)
       8.1. > (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
       8.2. > (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
@@ -345,10 +345,6 @@
   )
 )
 
-(define (arbol-binario-hoja? nodo arbol)
-  (and (null? (arbol-binario-hijo-der nodo)) (null? (arbol-binario-hijo-izq nodo)))
-)
-
 (define (arbol-binario-nodo? nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
     ((null? arbol) #f)
@@ -356,7 +352,20 @@
     (else
       (cond
         ((< nodo raiz) (arbol-binario-nodo? nodo (arbol-binario-subarbol-izq arbol)))
-        ((> nodo raiz) (arbol-binario-nodo? nodo (arbol-binario-subarbol-der arbol)))
+        (else (arbol-binario-nodo? nodo (arbol-binario-subarbol-der arbol)))
+      )
+    )
+  )
+)
+
+(define (arbol-binario-hoja? nodo arbol (raiz (arbol-binario-raiz arbol)))
+  (cond
+    ((null? arbol) #f)
+    ((equal? nodo raiz) (and (null? (arbol-binario-subarbol-izq arbol)) (null? (arbol-binario-subarbol-der arbol))))
+    (else
+      (cond
+        ((< nodo raiz) (arbol-binario-hoja? nodo (arbol-binario-subarbol-izq arbol)))
+        (else (arbol-binario-hoja? nodo (arbol-binario-subarbol-der arbol)))
       )
     )
   )
@@ -528,60 +537,66 @@
 
 ; - - - - - Test - - - - -
 
-; (displayln "\n(factorial n)\n")
-; (factorial 0)
-; (factorial 1)
-; (factorial 7)
+(displayln "\n(factorial n)\n")
+(factorial 0)
+(factorial 1)
+(factorial 7)
 
-; (displayln "\n\n(fibonacci n)\n")
-; (fibonacci 0)
-; (fibonacci 1)
-; (fibonacci 7)
+(displayln "\n\n(fibonacci n)\n")
+(fibonacci 0)
+(fibonacci 1)
+(fibonacci 7)
 
-; (displayln "\n\n(miembro? elemento lista)\n")
-; (miembro? null '())
-; (miembro? 'a '(a b c))
-; (miembro? 'a '(b c d))
+(displayln "\n\n(miembro? elemento lista)\n")
+(miembro? null '())
+(miembro? 'a '(a b c))
+(miembro? 'a '(b c d))
 
-; (displayln "\n\n(eliminar elemento lista)\n")
-; (eliminar 'a '(a))
-; (eliminar 'a '(a b c a))
-; (eliminar 'a '(b c d))
+(displayln "\n\n(eliminar elemento lista)\n")
+(eliminar 'a '(a))
+(eliminar 'a '(a b c a))
+(eliminar 'a '(b c d))
 
-; (displayln "\n\n(quicksort lista)\n")
-; (quicksort '(7 5))
-; (quicksort '(3 2 1))
-; (quicksort '(2 3 4 1 1 2 5))
+(displayln "\n\n(quicksort lista)\n")
+(quicksort '(7 5))
+(quicksort '(3 2 1))
+(quicksort '(2 3 4 1 1 2 5))
 
-; (displayln "\n\n(automovil valores atributos)\n")
-; (automovil '(Hatchback Suzuki Forza1 Rojo Si Manual))
-; (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
-; (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
+(displayln "\n\n(automovil valores atributos)\n")
+(automovil '(Hatchback Suzuki Forza1 Rojo Si Manual))
+(automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
+(automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
-; (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
-; (arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
-; (arbol-binario-eliminar '15 '(10 (5 3 8) (15 () 18)))
-;(arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
-
-
-(displayln "\n")
+(displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
 (arbol-binario-eliminar '5 '(10 5 15))
 (arbol-binario-eliminar '15 '(10 (5 2 8) (15 17)))
 (arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
 
-(displayln "\n")
+(displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
+(grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+(grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+(grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
 
-; (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
-; (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-; (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
-; (grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
+(displayln "\n\n(longitud-cola lista)\n")
+(longitud-cola '())
+(longitud-cola '(a b c))
+(longitud-cola '(1 2 3 4 5))
 
-; (displayln "\n\n(longitud-cola lista)\n")
-; (longitud-cola '())
-; (longitud-cola '(a b c))
-; (longitud-cola '(1 2 3 4 5))
+(displayln "\n(longitud-pila lista)\n")
+(longitud-pila '())
+(longitud-pila '(a b c))
+(longitud-pila '(1 2 3 4 5))
 
-; (displayln "\n(longitud-pila lista)\n")
-; (longitud-pila '())
-; (longitud-pila '(a b c))
-; (longitud-pila '(1 2 3 4 5))
+
+(displayln "\n\n(arbol-binario-nodo? nodo arbol)\n")
+(arbol-binario-nodo? '5 '(10 5 15))
+(arbol-binario-nodo? '15 '(10 (5 2 8) (15 17)))
+(arbol-binario-nodo? '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
+(arbol-binario-nodo? '35 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (35 (30 25 32) 40))))
+
+
+(displayln "\n\n(arbol-binario-hoja? nodo arbol)\n")
+(arbol-binario-hoja? '5 '(10 5 15))
+(arbol-binario-hoja? '15 '(10 (5 2 8) (15 17)))
+(arbol-binario-hoja? '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
+(arbol-binario-hoja? '30 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (35 (30 25 32) 40))))
