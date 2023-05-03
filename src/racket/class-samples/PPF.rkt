@@ -371,6 +371,47 @@
   )
 )
 
+
+(define (arbol-binario-subarbol nodo arbol)
+  (cond
+    ((null? arbol) '())
+    ((or (equal? nodo (arbol-binario-hijo-izq arbol)) (equal? nodo (arbol-binario-hijo-der arbol))) arbol)
+    (else
+      (cond
+        ((< nodo (arbol-binario-raiz arbol)) (arbol-binario-subarbol nodo (arbol-binario-subarbol-izq arbol)))
+        (else (arbol-binario-subarbol nodo (arbol-binario-subarbol-der arbol)))
+      )
+    )
+  )
+)
+
+(define (arbol-binario-eliminar-hoja nodo subarbol arbol (resultado '()))
+  (cond
+    ((null? arbol) '())
+    ((equal? (arbol-binario-raiz subarbol) (arbol-binario-raiz arbol))
+      (append resultado arbol)
+    )
+    (else
+      (cond
+        ((< nodo (arbol-binario-raiz arbol)) (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-izq arbol)))
+        (else (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-der arbol)))
+      )
+    )
+  )
+)
+
+(define (arbol-binario-eliminar-aux nodo arbol)
+  (cond
+    ((arbol-binario-hoja? nodo arbol)
+    )
+    (else 
+      (cond
+        ((null? (arbol-binario-hijo-der arbol)))
+      )
+    )
+  )
+)
+
 #|
   Elimina el nodo especificado del árbol binario especificado
   @param nodo número real cómo nodo del árbol binario que se desea eliminar
@@ -383,7 +424,7 @@
     ((null? arbol) (displayln "ERROR: El árbol binario debe contener al menos un elemento"))
     (else
       (cond
-        ((arbol-binario-nodo? nodo arbol) (displayln "Eliminar nodo"))
+        ((arbol-binario-nodo? nodo arbol) (arbol-binario-eliminar-aux nodo arbol))
         (else
           (display "ERROR: ")
           (display nodo)
@@ -586,17 +627,3 @@
 (longitud-pila '())
 (longitud-pila '(a b c))
 (longitud-pila '(1 2 3 4 5))
-
-
-(displayln "\n\n(arbol-binario-nodo? nodo arbol)\n")
-(arbol-binario-nodo? '5 '(10 5 15))
-(arbol-binario-nodo? '15 '(10 (5 2 8) (15 17)))
-(arbol-binario-nodo? '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
-(arbol-binario-nodo? '35 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (35 (30 25 32) 40))))
-
-
-(displayln "\n\n(arbol-binario-hoja? nodo arbol)\n")
-(arbol-binario-hoja? '5 '(10 5 15))
-(arbol-binario-hoja? '15 '(10 (5 2 8) (15 17)))
-(arbol-binario-hoja? '18 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (17 16 18))))
-(arbol-binario-hoja? '30 '(10 (5 (2 1 3) (8 7 9)) (15 (14 13 15) (35 (30 25 32) 40))))
