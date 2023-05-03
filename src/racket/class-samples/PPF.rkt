@@ -283,24 +283,13 @@
   )
 )
 
-; (define (arbol-binario nodos (arbol '()))
-;   (cond
-;     ((null? nodos) arbol)
-;     (else 
-;       (append 
-        
-;       )
-;     )
-;   )
-; )
-
 (define (arbol-binario raiz hijo-izq hijo-der)
   (cond
     ((null? raiz) '())
     (else
       (cond
         ((and (null? hijo-izq) (null? hijo-der)) (list raiz))
-        (else (list (list raiz hijo-izq hijo-der)))
+        (else (list raiz hijo-izq hijo-der))
       )
     )
   )
@@ -370,6 +359,14 @@
   )
 )
 
+(define (arbol-binario-mayor arbol)
+  (cond 
+    ((null? arbol) '())
+    ((null? (arbol-binario-subarbol-der arbol)) (arbol-binario-raiz arbol))
+    (else (arbol-binario-mayor (arbol-binario-subarbol-der arbol)))
+  )
+)
+
 (define (arbol-binario-nodo? nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
     ((null? arbol) #f)
@@ -410,60 +407,39 @@
   )
 )
 
-; (arbol-binario-eliminar '12 '(10 (5 2 8) (15 12 17)))
-; (arbol-binario-eliminar '17 '(10 (5 2 8) (15 () 17)))
-; (arbol-binario-eliminar '7 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
-; (arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
+; (arbol-binario-eliminar '8 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
+; (arbol-binario-eliminar '12 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 ()) (17 16 18))))
+; (arbol-binario-eliminar '17 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 () 18))))
 
-; '(10 
-;     (5 (2 1 3) (8 7 9))
-;     (15 (12 11 13) (17 16 18))
-; )
-
-'((10 (5 2 8)) (15 () 17))
-'((10 (5 2 8)) 15)
-'((10 (15 (12 11 13) (17 16 18))) (5 (2 1 3)) (8 () 9))
-'((10 (5 (2 1 3) (8 7 9))) (15 (12 11 13)) (17 16 ()))
-
-
-(define (arbol-binario-eliminar-hoja nodo subarbol arbol (resultado '()))
+(define (arbol-binario-eliminar-aux nodo arbol (raiz (arbol-binario-raiz arbol)))
   (cond
-    ((null? arbol) resultado)
-    ((equal? (arbol-binario-raiz subarbol) (arbol-binario-raiz arbol))
-      (cond
-        ((arbol-binario-hijo-izq? nodo subarbol)
-           (append resultado (arbol-binario (arbol-binario-raiz arbol) '() (arbol-binario-subarbol-der arbol)))
-        )
-        ((arbol-binario-hijo-der? nodo subarbol)
-          (append resultado (arbol-binario (arbol-binario-raiz arbol) (arbol-binario-subarbol-izq arbol) '()))
-        )
+    ((null? arbol) '())
+    ((< nodo raiz)
+      (arbol-binario 
+        raiz
+        (arbol-binario-eliminar-aux nodo (arbol-binario-subarbol-izq arbol))
+        (arbol-binario-subarbol-der arbol)
       )
     )
+    ((> nodo raiz)
+      (arbol-binario 
+        raiz
+        (arbol-binario-subarbol-izq arbol)
+        (arbol-binario-eliminar-aux nodo (arbol-binario-subarbol-der arbol))
+      )
+    )
+    ((arbol-binario-hoja? nodo arbol) '())
+    ((null? (arbol-binario-hijo-izq arbol)) (arbol-binario-subarbol-der arbol))
+    ((null? (arbol-binario-hijo-der arbol)) (arbol-binario-subarbol-izq arbol))
     (else
-      (cond
-        ((< nodo (arbol-binario-raiz arbol)) 
-          (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-izq arbol) (append resultado (cons (arbol-binario-raiz arbol) (list (arbol-binario-subarbol-der arbol)))))
+      (arbol-binario
+        (arbol-binario-mayor (arbol-binario-subarbol-izq arbol))
+        (arbol-binario-eliminar-aux
+          (arbol-binario-mayor (arbol-binario-subarbol-izq arbol))
+          (arbol-binario-subarbol-izq arbol)
         )
-        (else
-          (arbol-binario-eliminar-hoja nodo subarbol (arbol-binario-subarbol-der arbol) (append resultado (cons (arbol-binario-raiz arbol) (list (arbol-binario-subarbol-izq arbol)))))
-        )
+        (arbol-binario-subarbol-der arbol)
       )
-    )
-  )
-)
-
-'(10 ((5 2 8)) (15 () 17))
-'(10 ((5 2 8)) 15)
-'(10 ((15 (12 11 13) (17 16 18))) 5 ((2 1 3)) (8 () 9))
-'(10 ((5 (2 1 3) (8 7 9))) 15 ((12 11 13)) (17 16 ()))
-
-(define (arbol-binario-eliminar-aux nodo arbol)
-  (cond
-    ((arbol-binario-hoja? nodo arbol)
-      (arbol-binario-eliminar-hoja nodo (arbol-binario-subarbol nodo arbol) arbol)
-    )
-    (else 
-      (displayln "NO ES HOJA")
     )
   )
 )
@@ -665,10 +641,13 @@
 (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
 (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
-(arbol-binario-eliminar '12 '(10 (5 2 8) (15 12 17)))
-(arbol-binario-eliminar '17 '(10 (5 2 8) (15 () 17)))
-(arbol-binario-eliminar '7 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
-(arbol-binario-eliminar '18 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
+(arbol-binario-eliminar '8 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
+(arbol-binario-eliminar '12 '(10 (5 (2 1 3) (8 7 9)) (15 12 (17 16 18))))
+(arbol-binario-eliminar '17 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) 17)))
+(arbol-binario-eliminar '12 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 ()) (17 16 18))))
+(arbol-binario-eliminar '17 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 () 18))))
+(arbol-binario-eliminar '15 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
+(arbol-binario-eliminar '10 '(10 (5 (2 1 3) (8 7 9)) (15 (12 11 13) (17 16 18))))
 
 (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
 (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
