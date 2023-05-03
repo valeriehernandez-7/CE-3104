@@ -276,7 +276,7 @@
   )
 )
 
-(define (arbol-binario-nodo? nodo arbol elemento)
+(define (arbol-binario-nodo? nodo arbol (elemento (car arbol)))
   (cond
     ((null? arbol) #f)
     ((equal? nodo elemento) #t)
@@ -306,12 +306,14 @@
     ((null? arbol) (error "El árbol binario debe contener al menos un elemento"))
     (else
       (cond
-        ((arbol-binario-nodo? nodo arbol (car arbol)) (displayln "Eliminar nodo"))
+        ((arbol-binario-nodo? nodo arbol) (displayln "Eliminar nodo"))
         (else (error "El nodo especificado no es miembro del árbol especificado"))
       )
     )
   )
 )
+
+
 
 #|
   Verifica que el grofo especificado tenga la forma ((n_1 (a_1 a_n)) (n_n (a_1 a_n)))
@@ -448,52 +450,52 @@
 
 ; - - - - - Test - - - - -
 
-(displayln "\n(factorial n)\n")
-(factorial 0)
-(factorial 1)
-(factorial 7)
+; (displayln "\n(factorial n)\n")
+; (factorial 0)
+; (factorial 1)
+; (factorial 7)
 
-(displayln "\n\n(fibonacci n)\n")
-(fibonacci 0)
-(fibonacci 1)
-(fibonacci 7)
+; (displayln "\n\n(fibonacci n)\n")
+; (fibonacci 0)
+; (fibonacci 1)
+; (fibonacci 7)
 
-(displayln "\n\n(miembro? elemento lista)\n")
-(miembro? null '())
-(miembro? 'a '(a b c))
-(miembro? 'a '(b c d))
+; (displayln "\n\n(miembro? elemento lista)\n")
+; (miembro? null '())
+; (miembro? 'a '(a b c))
+; (miembro? 'a '(b c d))
 
-(displayln "\n\n(eliminar elemento lista)\n")
-(eliminar 'a '(a))
-(eliminar 'a '(a b c a))
-(eliminar 'a '(b c d))
+; (displayln "\n\n(eliminar elemento lista)\n")
+; (eliminar 'a '(a))
+; (eliminar 'a '(a b c a))
+; (eliminar 'a '(b c d))
 
-(displayln "\n\n(quicksort lista)\n")
-(quicksort '(7 5))
-(quicksort '(3 2 1))
-(quicksort '(2 3 4 1 1 2 5))
+; (displayln "\n\n(quicksort lista)\n")
+; (quicksort '(7 5))
+; (quicksort '(3 2 1))
+; (quicksort '(2 3 4 1 1 2 5))
 
-(displayln "\n\n(automovil valores atributos)\n")
-(automovil '(Hatchback Suzuki Forza1 Rojo Si Manual))
-(automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
-(automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
+; (displayln "\n\n(automovil valores atributos)\n")
+; (automovil '(Hatchback Suzuki Forza1 Rojo Si Manual))
+; (automovil '(Hatchback Suzuki Forza2 Negro Si Automático))
+; (automovil '(Hatchback Suzuki Forza3 Azul No Manual) '(Tipo Marca Modelo Color AC Tansmisión))
 
 (displayln "\n\n(arbol-binario-eliminar nodo arbol)\n")
 (arbol-binario-eliminar '14 '(10 (5 3 8) (15 14 18)))
 (arbol-binario-eliminar '15 '(10 (5 3 8) (15 18)))
 (arbol-binario-eliminar '5 '(10 (5 3 8) (15 14 18)))
 
-(displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
-(grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
-(grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
-(grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
+; (displayln "\n\n(grafo-busqueda-anchura grafo nodo)\n")
+; (grafo-busqueda-anchura '((A (B D)) (B (A C)) (C (B D)) (D (A C))) 'C)
+; (grafo-busqueda-anchura '((I (A B)) (A (I C D)) (B (I C D)) (C (A B E)) (D (A B F)) (E (C)) (F (D))))
+; (grafo-busqueda-anchura '((A (H)) (B (D H)) (C (D R)) (D (B C H)) (H (A B D R T)) (R (C H)) (T (H))) 'D)
 
-(displayln "\n\n(longitud-cola lista)\n")
-(longitud-cola '())
-(longitud-cola '(a b c))
-(longitud-cola '(1 2 3 4 5))
+; (displayln "\n\n(longitud-cola lista)\n")
+; (longitud-cola '())
+; (longitud-cola '(a b c))
+; (longitud-cola '(1 2 3 4 5))
 
-(displayln "\n(longitud-pila lista)\n")
-(longitud-pila '())
-(longitud-pila '(a b c))
-(longitud-pila '(1 2 3 4 5))
+; (displayln "\n(longitud-pila lista)\n")
+; (longitud-pila '())
+; (longitud-pila '(a b c))
+; (longitud-pila '(1 2 3 4 5))
