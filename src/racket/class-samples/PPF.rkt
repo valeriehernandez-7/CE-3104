@@ -134,6 +134,21 @@
 )
 
 #|
+  Invierte el orden de la lista
+  @param lista lista de elementos que desea invertir
+  @param invertida lista con el orden recibido invertido
+  @return lista con los elementos en orden inverso
+|#
+(define (invertir lista (invertida '()))
+  (cond
+    ((null? lista) invertida)
+    (else
+      (invertir (cdr lista) (cons (car lista) invertida))
+    )
+  )
+)
+
+#|
   Calcula el factorial de n [n! = n(n-1)!]
   @param n número entero positivo
   @return número resultante de la aplicación del Factorial
