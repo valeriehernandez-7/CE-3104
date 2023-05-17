@@ -19,9 +19,20 @@
 
 
 % >>>>>>>>>>>>>>> Árbol Genealógico  <<<<<<<<<<<<<<<
+mujer(silvia).
+
+mujer(clara).
+mujer(isabel).
+mujer(ana).
+mujer(patricia).
+hombre(tomas).
+hombre(jose).
+hombre(jaime).
 
 % A es el progenitor de B
 % progenitor(A, B).
+progenitor(silvia, clara).
+
 progenitor(clara, jose).
 progenitor(tomas, jose).
 progenitor(tomas, isabel).
@@ -29,28 +40,41 @@ progenitor(jose, ana).
 progenitor(jose, patricia).
 progenitor(patricia, jaime).
 
-% A es abuelo de B si A es padre de C y C es padre B
+% A es abuelo de B
 abuelo(A, B) :-
-    progenitor(A, C),
-    progenitor(C, B).
+    hombre(A), % A es hombre
+    progenitor(A, C), % A es progenitor de C
+    progenitor(C, B). % C es progenitor de B
 
-% A y B son los abuelos de C si A es abuelo de C y B es abuelo de C
+% A es abuela de B
+abuela(A, B) :-
+    mujer(A), % A es mujer
+    progenitor(A, C), % A es progenitor de C
+    progenitor(C, B). % C es progenitor de B
+
+% A y B son los abuelos
 abuelos(A, B, C) :-
-    abuelo(A, C),
-    abuelo(B, C),
-    A \= B.
+    abuela(A, C), %  A es abuela de C
+    abuelo(B, C). %  B es abuela de C
 
-% A es abuelo de B si A es padre de C y C es padre B
+% A es bisabuela de B
+bisabuela(A, B) :- 
+    mujer(A), % A es mujer
+    progenitor(A, C), %  A es padre de C
+    progenitor(C, D), %  C es padre de D
+    progenitor(D, B). %  D es padre de B
+
+% A es bisabuelo de B
 bisabuelo(A, B) :- 
-    progenitor(A, C),
-    progenitor(C, D),
-    progenitor(D, B).
+    hombre(A), % A es hombre
+    progenitor(A, C), %  A es padre de C
+    progenitor(C, D), %  C es padre de D
+    progenitor(D, B). %  D es padre de B
 
-% A y B son los bisabuelos de C si A es bisabuelo de C y B es bisabuelo de C
+% A y B son los bisabuelos
 bisabuelos(A, B, C) :-
-    bisabuelo(A, C),
-    bisabuelo(B, C),
-    A \= B.
+    bisabuela(A, C), %  A es bisabuela de C
+    bisabuelo(B, C). %  B es bisabuelo de C
 
 % ¿Como preguntamos quienes son los abuelos de Jaime?
 % R/: ?- abuelos(A, B, jaime).
