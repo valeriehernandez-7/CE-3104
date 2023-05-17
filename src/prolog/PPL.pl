@@ -2,7 +2,7 @@
 % valeriehernandez@estudiantec.cr
 % https://github.com/valeriehernandez-7
 
-% Programación Funcional
+% Programación Lógica
 % Taller
 
 % Instituto Tecnológico de Costa Rica
@@ -37,7 +37,8 @@ abuelo(A, B) :-
 % A y B son los abuelos de C si A es abuelo de C y B es abuelo de C
 abuelos(A, B, C) :-
     abuelo(A, C),
-    abuelo(B, C).
+    abuelo(B, C),
+    A \= B.
 
 % A es abuelo de B si A es padre de C y C es padre B
 bisabuelo(A, B) :- 
@@ -48,7 +49,8 @@ bisabuelo(A, B) :-
 % A y B son los bisabuelos de C si A es bisabuelo de C y B es bisabuelo de C
 bisabuelos(A, B, C) :-
     bisabuelo(A, C),
-    bisabuelo(B, C).
+    bisabuelo(B, C),
+    A \= B.
 
 % ¿Como preguntamos quienes son los abuelos de Jaime?
 % R/: ?- abuelos(A, B, jaime).
