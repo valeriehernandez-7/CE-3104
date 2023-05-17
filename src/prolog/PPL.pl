@@ -19,20 +19,9 @@
 
 
 % >>>>>>>>>>>>>>> Árbol Genealógico  <<<<<<<<<<<<<<<
-mujer(silvia).
-
-mujer(clara).
-mujer(isabel).
-mujer(ana).
-mujer(patricia).
-hombre(tomas).
-hombre(jose).
-hombre(jaime).
 
 % A es el progenitor de B
 % progenitor(A, B).
-progenitor(silvia, clara).
-
 progenitor(clara, jose).
 progenitor(tomas, jose).
 progenitor(tomas, isabel).
@@ -40,47 +29,19 @@ progenitor(jose, ana).
 progenitor(jose, patricia).
 progenitor(patricia, jaime).
 
-% A es abuelo de B
-abuelo(A, B) :-
-    hombre(A), % A es hombre
-    progenitor(A, C), % A es progenitor de C
-    progenitor(C, B). % C es progenitor de B
+% A es el antecesor de B
+antecesor(A, B) :- progenitor(A, B).
+antecesor(A, B) :- progenitor(A, C), progenitor(C, B).
 
-% A es abuela de B
-abuela(A, B) :-
-    mujer(A), % A es mujer
-    progenitor(A, C), % A es progenitor de C
-    progenitor(C, B). % C es progenitor de B
-
-% A y B son los abuelos
-abuelos(A, B, C) :-
-    abuela(A, C), %  A es abuela de C
-    abuelo(B, C). %  B es abuela de C
-
-% A es bisabuela de B
-bisabuela(A, B) :- 
-    mujer(A), % A es mujer
-    progenitor(A, C), %  A es padre de C
-    progenitor(C, D), %  C es padre de D
-    progenitor(D, B). %  D es padre de B
-
-% A es bisabuelo de B
-bisabuelo(A, B) :- 
-    hombre(A), % A es hombre
-    progenitor(A, C), %  A es padre de C
-    progenitor(C, D), %  C es padre de D
-    progenitor(D, B). %  D es padre de B
-
-% A y B son los bisabuelos
-bisabuelos(A, B, C) :-
-    bisabuela(A, C), %  A es bisabuela de C
-    bisabuelo(B, C). %  B es bisabuelo de C
+% A es el sucesor de B
+sucesor(A, B) :- progenitor(B, A).
+sucesor(A, B) :- progenitor(B, C), progenitor(A, C).
 
 % ¿Como preguntamos quienes son los abuelos de Jaime?
-% R/: ?- abuelos(A, B, jaime).
+% R/: ?- progenitor(Abuelo, Madre), progenitor(Madre, jaime).
 
 % ¿Como preguntamos quienes son los bisabuelos de Jaime?
-% R/: ?- bisabuelos(A, B, jaime).
+% R/: ?- progenitor(Bisabuela, Abuelo), progenitor(Bisabuelo, Abuelo), progenitor(Abuelo, Madre), progenitor(Madre, jaime), Bisabuela \= Bisabuelo.
 
 
 
