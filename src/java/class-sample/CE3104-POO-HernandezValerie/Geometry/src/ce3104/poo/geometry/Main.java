@@ -6,11 +6,11 @@ public class Main {
     public static void main(String[] args) {
 
         Shape[] shapes = {
-                new Circle(5),
-                new Square(6),
-                new Rectangle(10, 5),
-                new Trapezoid(3, 10, 5),
-                new Parallelogram(13, 20, 12)
+                new Circle(5F),
+                new Square(6F),
+                new Rectangle(10F, 5F),
+                new Trapezoid(3F, 10F, 5F),
+                new Parallelogram(13F, 20F, 12F)
         };
 
         for (Shape shape : shapes) {

@@ -2,19 +2,19 @@ package ce3104.poo.geometry.shapes;
 
 public final class Square extends Shape {
 
-    private final Integer side;
+    private final Float side;
 
-    public Square(Integer side) {
+    public Square(Float side) {
         this.side = side;
     }
 
     @Override
     public Float getPerimeter() {
-        return (float) (4 * this.side);
+        return (4 * this.side);
     }
 
     @Override
     public Float getArea() {
-        return (float) (this.side * this.side);
+        return this.side * this.side;
     }
 }
