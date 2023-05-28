@@ -2,11 +2,11 @@ package ce3104.poo.geometry.shapes;
 
 public final class Parallelogram extends Shape {
 
-    private final Float side;
-    private final Float base;
-    private final Float height;
+    private final Integer side;
+    private final Integer base;
+    private final Integer height;
 
-    public Parallelogram(Float side, Float base, Float height) {
+    public Parallelogram(Integer side, Integer base, Integer height) {
         this.side = side;
         this.base = base;
         this.height = height;
@@ -14,11 +14,11 @@ public final class Parallelogram extends Shape {
 
     @Override
     public Float getPerimeter() {
-        return (2 * (this.side + this.base));
+        return (float) (2 * (this.side + this.base));
     }
 
     @Override
     public Float getArea() {
-        return (this.base * this.height);
+        return (float) (this.base * this.height);
     }
 }

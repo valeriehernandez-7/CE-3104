@@ -2,9 +2,9 @@ package ce3104.poo.geometry.shapes;
 
 public final class Circle extends Shape {
 
-    private final Float radius;
+    private final Integer radius;
 
-    public Circle(Float radius) {
+    public Circle(Integer radius) {
         this.radius = radius;
     }
 
