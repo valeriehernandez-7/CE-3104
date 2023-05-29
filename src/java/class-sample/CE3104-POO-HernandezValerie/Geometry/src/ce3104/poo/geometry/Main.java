@@ -14,7 +14,7 @@ public class Main {
         };
 
         for (Shape shape : shapes) {
-            System.out.println("\n" + shape.getName());
+            System.out.println("\n" + shape.name);
             System.out.println("\tPerimeter ≈ " + shape.getPerimeter() + " m");
             System.out.println("\tArea ≈ " + shape.getArea() + " m²");
         }
