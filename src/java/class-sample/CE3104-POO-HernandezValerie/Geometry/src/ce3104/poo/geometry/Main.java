@@ -2,6 +2,26 @@ package ce3104.poo.geometry;
 
 import ce3104.poo.geometry.shapes.*;
 
+/*
+    Valerie M. Hernández Fernández
+    valeriehernandez@estudiantec.cr
+    https://github.com/valeriehernandez-7
+
+    Programación Orientada a Objetos
+    Taller (Quiz)
+
+    Instituto Tecnológico de Costa Rica
+    Campus Tecnológico Central Cartago
+    Área Académica Ingeniería en Computadores
+
+    CE 3104 Lenguajes, Compiladores e Intérpretes
+    Ing. Marco Rivera Meneses, MGP
+    Grupo 01
+
+    I Semestre
+    2023
+ */
+
 public class Main {
     public static void main(String[] args) {
 
