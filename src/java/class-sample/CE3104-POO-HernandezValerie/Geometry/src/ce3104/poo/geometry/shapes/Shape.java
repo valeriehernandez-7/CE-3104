@@ -6,7 +6,7 @@ package ce3104.poo.geometry.shapes;
 public abstract class Shape {
 
     /**
-     * Shape's name.
+     * Shape class instance's name.
      */
     public final String name = this.getClass().getSimpleName();
 
