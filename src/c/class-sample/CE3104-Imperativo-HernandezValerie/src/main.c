@@ -168,7 +168,8 @@ int isWord(char *text) {
 }
 
 void wordCount(char *filename) {
-    FILE *file = fopen(filename, "r");
+    char filepath[100] = "../src/";
+    FILE *file = fopen(strcat(filepath, filename), "r");
     if(file == NULL) exit(1);
     int lineMaxLength = 255;
     char line[lineMaxLength];
@@ -209,7 +210,7 @@ int main() {
     char dest[100] = "CE";
     stringConcatenation(dest, "3104");
 
-    printf("\nString's concatenation using pointers\n"); // Exercise 2.7
+    printf("\nWord Counter\n"); // Exercise 2.7
     wordCount("allanturing.txt");
     return 0;
 }

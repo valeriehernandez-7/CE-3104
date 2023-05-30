@@ -1,0 +1,28 @@
+Alan Mathison Turing nacio el 23 de junio de 1912 en el barrio de Paddington, Londres.
+Su familia era de clase media alta. Fue el segundo hijo de Julius y Sara, que permanecieron
+en la India durante varios annos, por lo que paso la infancia con su hermano mayor John.
+
+En 1928, en la escuela Sherborne conocio a su amigo Christopher Morcom, quien falleceria dos annos despues.
+Por este motivo es que Turing se interesa por el estudio de la mente humana a traves de la fisica y
+la mecanica cuantica, buscando la solucion a la relacion entre mente y materia.
+Al anno siguiente en Cambridge, en el King's College, encontro un metodo de estudio que permitia ideas mas
+abiertas y alli consiguio distinguirse en logica y matematica. En 1936 le otorgaron un premio por sus
+investigaciones en la teoria de la probabilidad.
+
+A los 26 annos Turing comenzo a trabajar para el servicio oficial britanico de cifrado.
+Obtuvo el doctorado por la Universidad de Princeton, especializandose en criptologia.
+En 1936, imaginaba una computadora que resolviera cualquier problema traducido a expresiones matematicas
+y luego reducido a una cadena de operaciones logicas con numeros binarios, en las que solo cabian dos decisiones:
+verdadero o falso. Se trataba de reducir cifras, letras, imagenes, sonidos a unos y ceros y usar un programa para
+resolver los problemas en pasos muy simples.
+
+Enigma era la maquina alemana que encriptaba mensajes durante la Segunda Guerra Mundial.
+Bombe fue creada en 1939 por Turing para poder desencriptar dichos mensajes del ejercito aleman y poder localizarlos,
+adelantandose a su estrategia. Era una version mejorada de un dispositivo disennado en 1938 por el criptologista polaco
+Marian Rejewski. Ademas, Bombe fue la precursora de la computadora programable electronica digital.
+
+Bletchley Park era una base militar en la cual se interceptaban mensajes del ejercito nazi y se realizaba un
+ejercicio de traduccion intersemiotica e interlinguistica. La utilizacion de esta practica mediante el dispositivo
+de analisis criptografico creado por Turing permitio a los aliados tener una ventaja durante la Segunda Guerra Mundial.
+Alli trabajaron diez mil personas: matematicos, ingenieros, docentes universitarios, oficinistas.
+Dos tercios de los trabajadores de Bletchley eran mujeres. El trabajo realizado alli fue mantenido en secreto hasta 1970.
