@@ -175,9 +175,11 @@ void wordCount(char *filename) {
     char line[lineMaxLength];
     while (fgets(line, lineMaxLength, file)) {
         printf(line , "\n");
-//        while(*line) {
-//
-//        }
+        char *word = strtok(line, " ");
+        while( word != NULL ) {
+            printf( "%s\n", word);
+            word = strtok(NULL, " ");
+        }
     }
     fclose(file);
 }
