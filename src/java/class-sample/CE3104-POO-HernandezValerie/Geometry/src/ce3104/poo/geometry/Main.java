@@ -25,6 +25,7 @@ import ce3104.poo.geometry.shapes.*;
 public class Main {
     public static void main(String[] args) {
 
+        // array of 5 different shapes
         Shape[] shapes = {
                 new Circle(5F),
                 new Square(6F),
@@ -33,6 +34,7 @@ public class Main {
                 new Parallelogram(13F, 20F, 12F)
         };
 
+        // loops through the array of shapes and prints their name, perimeter and area
         for (Shape shape : shapes) {
             System.out.println("\n" + shape.name);
             System.out.println("\tPerimeter ≈ " + shape.getPerimeter() + " m");
