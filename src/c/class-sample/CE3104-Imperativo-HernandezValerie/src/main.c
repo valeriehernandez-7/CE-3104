@@ -220,7 +220,7 @@ int main() {
     char dest[100] = "CE";
     stringConcatenation(dest, "3104");
 
-    printf("\nWord Counter\n"); // Exercise 2.7
+    printf("\nWord Counter\n\n"); // Exercise 2.7
     wordCount("allanturing.txt");
     return 0;
 }
