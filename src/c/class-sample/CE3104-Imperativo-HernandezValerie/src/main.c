@@ -157,7 +157,6 @@ struct word {
     char *text;
     int line;
     int count;
-    struct word *nextWord;
 };
 
 int isWord(const char *text) {
@@ -173,15 +172,19 @@ void wordCount(char *filename) {
     char filepath[100] = "../src/";
     char ch;
     char word[50] = {'\0'};
+    unsigned int line = 1;
     FILE *file;
     if ((file = fopen(strcat(filepath, filename), "r")) == NULL) exit(1);
     while ((ch = getc(file)) != EOF) {
+        if (ch == '\n') {
+            line++;
+        }
         if (isalnum(ch)) {
             ch = tolower(ch);
             strncat(word, &ch, 1);
         } else {
             if (isWord(word) == 1) {
-                printf("%s\n", word);
+                printf("%s : %u\n", word, line);
             }
             memset(word, '\0', sizeof(word));
         }
