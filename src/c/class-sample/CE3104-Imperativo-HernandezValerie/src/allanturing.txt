@@ -1,3 +1,4 @@
+
 Alan Mathison Turing nacio el 23 de junio de 1912 en el barrio de Paddington, Londres.
 Su familia era de clase media alta. Fue el segundo hijo de Julius y Sara, que permanecieron
 en la India durante varios annos, por lo que paso la infancia con su hermano mayor John.
@@ -5,7 +6,7 @@ en la India durante varios annos, por lo que paso la infancia con su hermano may
 En 1928, en la escuela Sherborne conocio a su amigo Christopher Morcom, quien falleceria dos annos despues.
 Por este motivo es que Turing se interesa por el estudio de la mente humana a traves de la fisica y
 la mecanica cuantica, buscando la solucion a la relacion entre mente y materia.
-Al anno siguiente en Cambridge, en el King's College, encontro un metodo de estudio que permitia ideas mas
+Al anno siguiente en Cambridge, en el Kings College, encontro un metodo de estudio que permitia ideas mas
 abiertas y alli consiguio distinguirse en logica y matematica. En 1936 le otorgaron un premio por sus
 investigaciones en la teoria de la probabilidad.
 

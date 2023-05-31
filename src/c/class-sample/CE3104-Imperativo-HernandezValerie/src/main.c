@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 /*
  * Valerie M. Hernández Fernández
@@ -145,11 +146,12 @@ void stringConcatenation(char *dest, char *src) {
 }
 
 const char *wordsIgnore[] = {
-    "el","la","lo","los","las","un","una","unos","unas",
-    "y", "a","e", "o", "u","ni","que",
-    "pero", "aunque", "mas", "sino"
+    "\0", "el", "la", "lo", "los", "las", "un", "una", "unos", "unas",
+    "y", "a", "e", "o", "u", "ni", "por", "que", "ademas",
+    "pero", "aunque", "mas", "sino", "de", "en", "se", "era",
+    "su", "del", "es", "le", "al", "esta"
 };
-const int wordsIgnoreLength = (sizeof(wordsIgnore)/sizeof(*wordsIgnore));
+const int wordsIgnoreLength = (sizeof(wordsIgnore) / sizeof(*wordsIgnore));
 
 struct word {
     char *text;
@@ -158,9 +160,9 @@ struct word {
     struct word *nextWord;
 };
 
-int isWord(char *text) {
+int isWord(const char *text) {
     for (int w = 0; w < wordsIgnoreLength; ++w) {
-        if (text == wordsIgnore[w]) {
+        if (strcmp(text, wordsIgnore[w]) == 0) {
             return 0;
         }
     }
@@ -169,16 +171,19 @@ int isWord(char *text) {
 
 void wordCount(char *filename) {
     char filepath[100] = "../src/";
-    FILE *file = fopen(strcat(filepath, filename), "r");
-    if(file == NULL) exit(1);
-    int lineMaxLength = 255;
-    char line[lineMaxLength];
-    while (fgets(line, lineMaxLength, file)) {
-        printf(line , "\n");
-        char *word = strtok(line, " ");
-        while( word != NULL ) {
-            printf( "%s\n", word);
-            word = strtok(NULL, " ");
+    char ch;
+    char word[50];
+    FILE *file;
+    if ((file = fopen(strcat(filepath, filename), "r")) == NULL) exit(1);
+    while ((ch = getc(file)) != EOF) {
+        if (isalnum(ch)) {
+            ch = tolower(ch);
+            strncat(word, &ch, 1);
+        } else {
+            if (isWord(word) == 1) {
+                printf("%s\n", word);
+            }
+            memset(word, '\0', sizeof(word));
         }
     }
     fclose(file);
