@@ -23,20 +23,35 @@
  * 2023
  */
 
+/**
+ *
+ */
 void kilometersToMiles() {
     for (unsigned short km = 1; km < 11; ++km) {
         printf("\t%u km %c %.2f mi\n", km, 247, (km * 0.621371));
     }
 }
 
+/**
+ *
+ * @param C
+ */
 void celsiusToFahrenheit(float C) {
     printf("\t%.2f %cC %c %.2f %cF\n", C, 248, 247, ((C * 1.8) + 32), 248);
 }
 
+/**
+ *
+ * @param F
+ */
 void fahrenheitToCelsius(float F) {
     printf("\t%.2f %cF %c %.2f %cC\n", F, 248, 247, ((F - 32) * 1.8), 248);
 }
 
+/**
+ *
+ * @param mode
+ */
 void temperature(int mode) {
     float temperature = 0;
     printf("\tEnter the temperature (float): ");
@@ -53,6 +68,11 @@ void temperature(int mode) {
     }
 }
 
+/**
+ *
+ * @param number
+ * @return
+ */
 unsigned int countDigits(int number) {
     if ((number / 10) == 0) {
         return 1;
@@ -61,6 +81,11 @@ unsigned int countDigits(int number) {
     }
 }
 
+/**
+ *
+ * @param number
+ * @return
+ */
 unsigned int countEvenDigits(int number) {
     if (((number / 10) == 0)) {
         if ((number % 2) == 0) {
@@ -77,6 +102,11 @@ unsigned int countEvenDigits(int number) {
     }
 }
 
+/**
+ *
+ * @param number
+ * @return
+ */
 unsigned int countOddDigits(int number) {
     if (((number / 10) == 0)) {
         if ((number % 2) == 1) {
@@ -93,6 +123,10 @@ unsigned int countOddDigits(int number) {
     }
 }
 
+/**
+ *
+ * @param mode
+ */
 void digits(int mode) {
     int number = 0;
     printf("\tEnter the number (integer): ");
@@ -112,6 +146,12 @@ void digits(int mode) {
     }
 }
 
+/**
+ *
+ * @param s
+ * @param p
+ * @return
+ */
 int stringLengthComparison(char *s, char *p) {
     while (*s != '\0' && *p != '\0') {
         s++, p++;
@@ -125,6 +165,11 @@ int stringLengthComparison(char *s, char *p) {
     }
 }
 
+/**
+ *
+ * @param dest
+ * @param src
+ */
 void stringConcatenation(char *dest, char *src) {
     char *destAddress = dest;
 
@@ -145,22 +190,42 @@ void stringConcatenation(char *dest, char *src) {
     printf("\n");
 }
 
+/**
+ *
+ */
+struct word {
+    char text[50];
+    int lineIndex;
+    int line[100];
+    int frequency;
+};
+
+
+struct word words[400];
+
+/**
+ *
+ */
 const char *wordsIgnore[] = {
     "\0", "el", "la", "lo", "los", "las", "un", "una", "unos", "unas",
     "y", "a", "e", "o", "u", "ni", "por", "que", "ademas",
     "pero", "aunque", "mas", "sino", "de", "en", "se", "era",
     "su", "del", "es", "le", "al", "esta"
 };
+
+/**
+ *
+ */
 const int wordsIgnoreLength = (sizeof(wordsIgnore) / sizeof(*wordsIgnore));
 
-struct word {
-    char *text;
-    int line;
-    int count;
-};
-
-int isWordsElement(char *expression , struct word words[]) {
-    for (int w = 0; w < (sizeof(words) / sizeof(words[0])); ++w) {
+/**
+ *
+ * @param expression
+ * @param words
+ * @return
+ */
+int isWordsElement(char *expression) {
+    for (int w = 0; w < 400; ++w) {
         if (strcmp(expression, words[w].text) == 0) {
             return w;
         }
@@ -168,6 +233,11 @@ int isWordsElement(char *expression , struct word words[]) {
     return -1;
 }
 
+/**
+ *
+ * @param text
+ * @return
+ */
 int isWord(const char *text) {
     for (int w = 0; w < wordsIgnoreLength; ++w) {
         if (strcmp(text, wordsIgnore[w]) == 0) {
@@ -177,6 +247,11 @@ int isWord(const char *text) {
     return 1;
 }
 
+/**
+ *
+ * @param file
+ * @return
+ */
 int fileWordCounter(FILE *file) {
     int count = 0;
     char ch;
@@ -188,6 +263,10 @@ int fileWordCounter(FILE *file) {
     return count;
 }
 
+/**
+ *
+ * @param filename
+ */
 void fileWordParser(char *filename) {
     char filepath[100] = "../src/";
     FILE *file;
@@ -196,7 +275,6 @@ void fileWordParser(char *filename) {
     char expression[50] = {'\0'};
     int line = 1;
     int w = -1;
-    //struct word words[(fileWordCounter(file))];
     while ((ch = getc(file)) != EOF) {
         if (ch == '\n') {
             line++;
@@ -206,19 +284,28 @@ void fileWordParser(char *filename) {
             strncat(expression, &ch, 1);
         } else {
             if (isWord(expression) == 1) {
-                printf("%s : %u\n", expression, line);
-//                if (isWordsElement(expression, words) == -1) {
-//                    printf("\t\t%s : %u\n", expression, line);
-//                } else {
-//                    printf("%s : %u\n", expression, line);
-//                    struct word newWord = {expression, line, 0};
-//                    words[w++] = newWord;
-//                }
+                int wordIndex = isWordsElement(expression);
+                if (wordIndex == -1) {
+                    w++;
+                    struct word newWord;
+                    strcpy(newWord.text, expression);
+                    newWord.lineIndex = 0;
+                    newWord.line[0] = line;
+                    newWord.frequency = 1;
+                    words[w] = newWord;
+                    printf("%s : %u\n", words[w].text, words[w].line[0]);
+                } else {
+                    words[wordIndex].lineIndex++;
+                    words[wordIndex].line[words[wordIndex].lineIndex] = line;
+                    words[wordIndex].frequency++;
+                    printf("\t\t%s : %u -- %d\n", words[wordIndex].text, words[wordIndex].line[words[wordIndex].lineIndex], words[wordIndex].frequency);
+                }
             }
             memset(expression, '\0', sizeof(expression));
         }
     }
     fclose(file);
+    memset(words, '\0', sizeof(words));
 }
 
 int main() {
@@ -239,17 +326,21 @@ int main() {
 //
 //    printf("\nNumber's odd digits\n");
 //    digits(3);
-
-    printf("\nString's length comparison using pointers\n"); // Exercise 2.5
-    printf("\t%d\n", stringLengthComparison("ab", "abc")); // s < p
-    printf("\t%d\n", stringLengthComparison("abc", "abc")); // s == p
-    printf("\t%d\n", stringLengthComparison("abc", "ab")); // s > p
+//
+//    printf("\nString's length comparison using pointers\n"); // Exercise 2.5
+//    printf("\t%d\n", stringLengthComparison("ab", "abc")); // s < p
+//    printf("\t%d\n", stringLengthComparison("abc", "abc")); // s == p
+//    printf("\t%d\n", stringLengthComparison("abc", "ab")); // s > p
 
     printf("\nString's concatenation using pointers\n"); // Exercise 2.6
     char dest[100] = "CE";
     stringConcatenation(dest, "3104");
 
-    printf("\nWord Counter\n\n"); // Exercise 2.7
+    printf("\nWord Finder\n\n"); // Exercise 2.7
     fileWordParser("allanturing.txt");
+
+    printf("\nWord Frequency\n\n"); // Exercise 2.8
+    fileWordParser("allanturing.txt");
+
     return 0;
 }
