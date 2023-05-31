@@ -172,7 +172,7 @@ int isWord(const char *text) {
 void wordCount(char *filename) {
     char filepath[100] = "../src/";
     char ch;
-    char word[50];
+    char word[50] = {'\0'};
     FILE *file;
     if ((file = fopen(strcat(filepath, filename), "r")) == NULL) exit(1);
     while ((ch = getc(file)) != EOF) {
