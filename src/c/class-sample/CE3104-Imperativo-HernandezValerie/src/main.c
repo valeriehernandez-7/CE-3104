@@ -159,6 +159,15 @@ struct word {
     int count;
 };
 
+int isWordsElement(char *expression , struct word words[]) {
+    for (int w = 0; w < (sizeof(words) / sizeof(words[0])); ++w) {
+        if (strcmp(expression, words[w].text) == 0) {
+            return w;
+        }
+    }
+    return -1;
+}
+
 int isWord(const char *text) {
     for (int w = 0; w < wordsIgnoreLength; ++w) {
         if (strcmp(text, wordsIgnore[w]) == 0) {
@@ -168,25 +177,45 @@ int isWord(const char *text) {
     return 1;
 }
 
-void wordCount(char *filename) {
-    char filepath[100] = "../src/";
+int fileWordCounter(FILE *file) {
+    int count = 0;
     char ch;
-    char word[50] = {'\0'};
-    unsigned int line = 1;
+    while ((ch = getc(file)) != EOF) {
+        if (isspace(ch)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+void fileWordParser(char *filename) {
+    char filepath[100] = "../src/";
     FILE *file;
     if ((file = fopen(strcat(filepath, filename), "r")) == NULL) exit(1);
+    char ch;
+    char expression[50] = {'\0'};
+    int line = 1;
+    int w = -1;
+    //struct word words[(fileWordCounter(file))];
     while ((ch = getc(file)) != EOF) {
         if (ch == '\n') {
             line++;
         }
         if (isalnum(ch)) {
             ch = tolower(ch);
-            strncat(word, &ch, 1);
+            strncat(expression, &ch, 1);
         } else {
-            if (isWord(word) == 1) {
-                printf("%s : %u\n", word, line);
+            if (isWord(expression) == 1) {
+                printf("%s : %u\n", expression, line);
+//                if (isWordsElement(expression, words) == -1) {
+//                    printf("\t\t%s : %u\n", expression, line);
+//                } else {
+//                    printf("%s : %u\n", expression, line);
+//                    struct word newWord = {expression, line, 0};
+//                    words[w++] = newWord;
+//                }
             }
-            memset(word, '\0', sizeof(word));
+            memset(expression, '\0', sizeof(expression));
         }
     }
     fclose(file);
@@ -221,6 +250,6 @@ int main() {
     stringConcatenation(dest, "3104");
 
     printf("\nWord Counter\n\n"); // Exercise 2.7
-    wordCount("allanturing.txt");
+    fileWordParser("allanturing.txt");
     return 0;
 }
