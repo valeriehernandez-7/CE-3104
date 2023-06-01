@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 
 /*
  * Valerie M. Hernández Fernández
@@ -367,10 +368,12 @@ int main() {
     char dest[100] = "CE";
     stringConcatenation(dest, "3104");
 
-    printf("\nWord Finder\n\n"); // Exercise 2.7
+    printf("\n\n\nWord Finder\n\n"); // Exercise 2.7
     fileWordFinder("allanturing.txt");
 
-    printf("\nWord Frequency\n\n"); // Exercise 2.8
+    usleep(1000000);
+
+    printf("\n\n\nWord Frequency\n\n"); // Exercise 2.8
     fileWordFrequency("allanturing.txt");
 
     return 0;
