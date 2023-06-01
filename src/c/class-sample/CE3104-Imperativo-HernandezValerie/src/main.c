@@ -319,36 +319,49 @@ void fileWordFinder(char *filename) {
             printf("%d ", words[w].line[l]);
             l++;
         }
-        printf(" -- %d\n", words[w].frequency);
-        //printf("\n");
+        printf("\n");
+        w++;
+    }
+    memset(words, '\0', sizeof(words));
+}
+
+/**
+ *
+ * @param filename
+ */
+void fileWordFrequency(char *filename) {
+    fileWordParser(filename);
+    int w = 0;
+    while (words[w].frequency) {
+        printf("%s : %d\n", words[w].text, words[w].frequency);
         w++;
     }
     memset(words, '\0', sizeof(words));
 }
 
 int main() {
-//    printf("\nkm to mi\n"); // Exercise 2.1
-//    kilometersToMiles();
-//
-//    printf("\n%cC to %cF\n", 248, 248); // Exercise 2.2
-//    temperature(1);
-//
-//    printf("\n%cF to %cC\n", 248, 248);
-//    temperature(2);
-//
-//    printf("\nNumber's length\n"); // Exercise 2.3
-//    digits(1);
-//
-//    printf("\nNumber's even digits\n"); // Exercise 2.4
-//    digits(2);
-//
-//    printf("\nNumber's odd digits\n");
-//    digits(3);
-//
-//    printf("\nString's length comparison using pointers\n"); // Exercise 2.5
-//    printf("\t%d\n", stringLengthComparison("ab", "abc")); // s < p
-//    printf("\t%d\n", stringLengthComparison("abc", "abc")); // s == p
-//    printf("\t%d\n", stringLengthComparison("abc", "ab")); // s > p
+    printf("\nkm to mi\n"); // Exercise 2.1
+    kilometersToMiles();
+
+    printf("\n%cC to %cF\n", 248, 248); // Exercise 2.2
+    temperature(1);
+
+    printf("\n%cF to %cC\n", 248, 248);
+    temperature(2);
+
+    printf("\nNumber's length\n"); // Exercise 2.3
+    digits(1);
+
+    printf("\nNumber's even digits\n"); // Exercise 2.4
+    digits(2);
+
+    printf("\nNumber's odd digits\n");
+    digits(3);
+
+    printf("\nString's length comparison using pointers\n"); // Exercise 2.5
+    printf("\t%d\n", stringLengthComparison("ab", "abc")); // s < p
+    printf("\t%d\n", stringLengthComparison("abc", "abc")); // s == p
+    printf("\t%d\n", stringLengthComparison("abc", "ab")); // s > p
 
     printf("\nString's concatenation using pointers\n"); // Exercise 2.6
     char dest[100] = "CE";
@@ -358,7 +371,7 @@ int main() {
     fileWordFinder("allanturing.txt");
 
     printf("\nWord Frequency\n\n"); // Exercise 2.8
-//    fileWordParser("allanturing.txt");
+    fileWordFrequency("allanturing.txt");
 
     return 0;
 }
