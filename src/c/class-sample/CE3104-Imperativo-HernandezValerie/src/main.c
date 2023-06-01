@@ -215,20 +215,17 @@ const char *wordsIgnore[] = {
 
 /**
  *
- */
-const int wordsIgnoreLength = (sizeof(wordsIgnore) / sizeof(*wordsIgnore));
-
-/**
- *
  * @param expression
  * @param words
  * @return
  */
 int isWordsElement(char *expression) {
-    for (int w = 0; w < 400; ++w) {
+    int w = 0;
+    while (words[w].frequency) {
         if (strcmp(expression, words[w].text) == 0) {
             return w;
         }
+        w++;
     }
     return -1;
 }
@@ -239,10 +236,12 @@ int isWordsElement(char *expression) {
  * @return
  */
 int isWord(const char *text) {
-    for (int w = 0; w < wordsIgnoreLength; ++w) {
+    int w = 0;
+    while (wordsIgnore[w]) {
         if (strcmp(text, wordsIgnore[w]) == 0) {
             return 0;
         }
+        w++;
     }
     return 1;
 }
@@ -290,21 +289,40 @@ void fileWordParser(char *filename) {
                     struct word newWord;
                     strcpy(newWord.text, expression);
                     newWord.lineIndex = 0;
+                    memset(newWord.line, '\0', sizeof(newWord.line));
                     newWord.line[0] = line;
                     newWord.frequency = 1;
                     words[w] = newWord;
-                    printf("%s : %u\n", words[w].text, words[w].line[0]);
                 } else {
                     words[wordIndex].lineIndex++;
                     words[wordIndex].line[words[wordIndex].lineIndex] = line;
                     words[wordIndex].frequency++;
-                    printf("\t\t%s : %u -- %d\n", words[wordIndex].text, words[wordIndex].line[words[wordIndex].lineIndex], words[wordIndex].frequency);
                 }
             }
             memset(expression, '\0', sizeof(expression));
         }
     }
     fclose(file);
+}
+
+/**
+ *
+ * @param filename
+ */
+void fileWordFinder(char *filename) {
+    fileWordParser(filename);
+    int w = 0;
+    while (words[w].frequency) {
+        int l = 0;
+        printf("%s : ", words[w].text);
+        while (words[w].line[l]) {
+            printf("%d ", words[w].line[l]);
+            l++;
+        }
+        printf(" -- %d\n", words[w].frequency);
+        //printf("\n");
+        w++;
+    }
     memset(words, '\0', sizeof(words));
 }
 
@@ -337,10 +355,10 @@ int main() {
     stringConcatenation(dest, "3104");
 
     printf("\nWord Finder\n\n"); // Exercise 2.7
-    fileWordParser("allanturing.txt");
+    fileWordFinder("allanturing.txt");
 
     printf("\nWord Frequency\n\n"); // Exercise 2.8
-    fileWordParser("allanturing.txt");
+//    fileWordParser("allanturing.txt");
 
     return 0;
 }
