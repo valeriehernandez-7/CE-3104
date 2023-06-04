@@ -268,7 +268,7 @@ int fileWordCounter(FILE *file) {
  * @param filename
  */
 void fileWordParser(char *filename) {
-    char filepath[100] = "../src/";
+    char filepath[100] = "../";
     FILE *file;
     if ((file = fopen(strcat(filepath, filename), "r")) == NULL) exit(1);
     char ch;

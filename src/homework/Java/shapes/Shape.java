@@ -1,4 +1,4 @@
-package ce3104.poo.geometry.shapes;
+package shapes;
 
 /**
  * Abstract superclass of which shapes inherit common attributes and methods.

@@ -1,4 +1,4 @@
-package ce3104.poo.geometry.shapes;
+package shapes;
 
 /**
  * Trapezoid shape class extends from the Shape class

@@ -1,6 +1,4 @@
-package ce3104.poo.geometry;
-
-import ce3104.poo.geometry.shapes.*;
+import shapes.*;
 
 /*
     Valerie M. Hernández Fernández
