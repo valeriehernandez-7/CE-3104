@@ -6,7 +6,7 @@
 
 _Bubble Sort_
 
-### Algorithm
+### Solution
 
 [Bubble Sort](https://github.com/valeriehernandez-7/CE-3104/tree/main/src/exam/Racket)
 
@@ -29,7 +29,7 @@ _Bubble Sort_
 
 _Concatenate_
 
-### Algorithm
+### Solution
 
 [Concatenate](https://github.com/valeriehernandez-7/CE-3104/tree/main/src/exam/Prolog)
 
@@ -68,7 +68,7 @@ L = [a,b,c,d,e].
 
 _Perfect Numbers_
 
-### Algorithm
+### Solution
 
 [Perfect Numbers](https://github.com/valeriehernandez-7/CE-3104/tree/main/src/exam/C)
 
@@ -94,7 +94,7 @@ Perfect numbers from 1 to 10000 are:
 
 _Sports_
 
-### Algorithm
+### Solution
 
 [Sports](https://github.com/valeriehernandez-7/CE-3104/tree/main/src/exam/Java)
 
