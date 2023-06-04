@@ -4,37 +4,29 @@
 
 ## Languages
 
-## Racket
+### Racket
 
 - function
 - function
 - function
 
-<br>
-
-## Prolog
+### Prolog
 
 - function
 - function
 - function
 
-<br>
-
-## C
+### C
 
 - function
 - function
 - function
 
-<br>
-
-## Java
+### Java
 
 - function
 - function
 - function
-
-<br>
 
 ##
 
