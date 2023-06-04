@@ -43,6 +43,7 @@ long long perfectNumber(int n) {
 void printPerfectNumbersWhileInRange(long long range) {
     long long perfectNum;
     int n = 0;
+    printf("\nPerfect numbers from 1 to %lld are: \n", range);
     while ((perfectNum = perfectNumber(n)) < range) {
         if (perfectNum != 0) {
             printf("%lld ", perfectNum);
@@ -84,6 +85,7 @@ int isPerfectNumber(long long num) {
  * @param range
  */
 void printPerfectNumbersForInRange(long long range) {
+    printf("\nPerfect numbers from 1 to %lld are: \n", range);
     for (long long num = 1; num < range; num++) {
         if (isPerfectNumber(num)) {
             printf("%lld ", num);
@@ -94,7 +96,13 @@ void printPerfectNumbersForInRange(long long range) {
 
 
 int main() {
+    printPerfectNumbersForInRange(10);
     printPerfectNumbersForInRange(100);
-    printPerfectNumbersWhileInRange(100);
+    printPerfectNumbersForInRange(1000);
+    printPerfectNumbersForInRange(10000);
+    // printPerfectNumbersWhileInRange(10);
+    // printPerfectNumbersWhileInRange(100);
+    // printPerfectNumbersWhileInRange(1000);
+    // printPerfectNumbersWhileInRange(10000);
     return 0;
 }

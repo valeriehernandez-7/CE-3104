@@ -1,24 +1,24 @@
-import deportes.Baloncesto;
-import deportes.Equipo;
-import deportes.Futbol;
-import deportes.Voleibol;
+import sports.Team;
+import sports.Soccer;
+import sports.Basketball;
+import sports.Volleyball;
 
 public class Main {
     public static void main(String[] args) {
 
-        // arreglo de quipos deportivos
-        Equipo[] equipos = {
-                new Futbol(2, 3),
-                new Baloncesto(5, 2),
-                new Voleibol(6, 4)
+        // sport teams array
+        Team[] teams = {
+                new Soccer(2, 3),
+                new Basketball(5, 2),
+                new Volleyball(6, 4)
         };
 
         // recorre los quipos mostrando su nombre, deporte y cantidad de persona en posicion
-        for (Equipo e : equipos) {
-            System.out.println("\n" + e.nombre);
-            System.out.println("\tDeporte: " + e.deporte);
-            System.out.print("\tPosiciones: ");
-            e.listarPosiciones();
+        for (Team e : teams) {
+            System.out.println("\n" + e.name);
+            System.out.println("\tSport : " + e.sport);
+            System.out.print("\tPositions : ");
+            e.showPositions();
         }
     }
 }
